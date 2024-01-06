@@ -1,10 +1,13 @@
-package com.loan.staffmgr;
+package com.loan.staffmgr.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.loan.staffmgr.R;
+import com.loan.staffmgr.base.BaseActivity;
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

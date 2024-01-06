@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="81dp"
+        android:orientation="vertical">
+
+        <include
+            android:layout_width="match_parent"
+            layout="@layout/include_logo"
+            android:layout_height="wrap_content"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginBottom="100dp"
+            android:layout_height="0dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="80dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="51dp">
+
+                        <com.loan.staffmgr.widget.EditTextContainer
+                            android:id="@+id/et_signin_phone_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="62dp"
+                            app:select_view_hint="@string/signin_account_title"/>
+
+<!--                        <androidx.appcompat.widget.AppCompatEditText-->
+<!--                            android:id="@+id/"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@null"-->
+<!--                            android:lines="1"-->
+<!--                            android:maxLines="1"-->
+<!--                            android:singleLine="true"-->
+<!--                            android:textColor="#333333"-->
+<!--                            android:maxLength="24"-->
+<!--                            android:textSize="18sp"-->
+<!--                            android:hint=""-->
+<!--                            android:inputType="number"-->
+<!--                            android:textCursorDrawable="@drawable/et_cursor_color" />-->
+
+                    </FrameLayout>
+
+                    <View style="@style/view_divide" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/white">
+
+                        <com.loan.staffmgr.widget.EditTextContainer
+                            android:id="@+id/et_signin_pwd"
+                            android:layout_width="match_parent"
+                            android:layout_height="62dp"
+                            app:select_view_hint="@string/signin_pwd_title"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_signin_show_pwd"
+                            android:layout_width="25dp"
+                            android:layout_marginEnd="32dp"
+                            android:src="@drawable/ic_show_pwd"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_height="25dp"/>
+
+                    </FrameLayout>
+
+                    <View style="@style/view_divide" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        android:background="@color/white">
+
+                        <com.loan.staffmgr.widget.EditTextContainer
+                            android:id="@+id/et_signin_verify"
+                            android:layout_width="match_parent"
+                            android:layout_height="62dp"
+                            app:select_view_hint="@string/signin_captcha_title"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_signin_verify"
+                            android:layout_width="100dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="30dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_signin_commit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/ripple_add_profile_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="@string/login_login"
+            android:textSize="16sp" />
+        <!--        android:text="@string/signin_login"-->
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_siginin_loading"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:indeterminateTint="@color/theme_color"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

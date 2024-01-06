@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">StaffMgr</string>
+    <string name="app_name">Collections</string>
+    <string name="signin_captcha">send sms</string>
+    <string name="signin_account_title">Account:</string>
+    <string name="signin_pwd_title">Password:</string>
+    <string name="signin_captcha_title">Captcha code:</string>
+    <string name="login_login">Login</string>
 </resources>
