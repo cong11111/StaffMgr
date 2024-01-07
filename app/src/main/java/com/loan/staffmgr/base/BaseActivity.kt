@@ -44,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun isDestroy() : Boolean{
+    fun isDestroy() : Boolean{
         if (isFinishing || isDestroyed) {
             return true
         }

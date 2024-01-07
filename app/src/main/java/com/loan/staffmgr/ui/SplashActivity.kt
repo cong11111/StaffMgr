@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.DeviceUtils
 import com.blankj.utilcode.util.SPUtils
@@ -13,8 +14,12 @@ import com.blankj.utilcode.util.ToastUtils
 import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseActivity
+import com.loan.staffmgr.bean.DashboardResponse
 import com.loan.staffmgr.global.Api
 import com.loan.staffmgr.global.Constant
+import com.loan.staffmgr.presenter.DashBoardPresenter
+import com.loan.staffmgr.utils.BuildRequestJsonUtils
+import com.loan.staffmgr.utils.log.LogSaver
 import com.lzy.okgo.OkGo
 import org.json.JSONException
 import org.json.JSONObject
@@ -30,6 +35,8 @@ class SplashActivity : BaseActivity() {
     private var requestTime: Long = 0
 
     private var mHandler: Handler? = null
+    private var view: View? = null
+    private var presenter: DashBoardPresenter? = null
 
     init {
         mHandler = Handler(
@@ -60,17 +67,12 @@ class SplashActivity : BaseActivity() {
         BarUtils.setStatusBarColor(this, resources.getColor(R.color.theme_color))
         BarUtils.setStatusBarLightMode(this, false)
         setContentView(R.layout.activity_splash)
-        //        boolean openGuide = SPUtils.getInstance().getBoolean(KEY_GUIDE, true);
-//        boolean openGuide = false;
-//        if (openGuide) {
-//            SPUtils.getInstance().put(KEY_GUIDE, false);
-//        }
-        Log.e("Test", " on create ... " +  DeviceUtils.getAndroidID())
-//        val httpHeaders = BuildRequestJsonUtils.buildHeadersNonLogin()
-//        OkGo.getInstance().addCommonHeaders(httpHeaders)
-//        val accountId = SPUtils.getInstance().getString(Constant.KEY_ACCOUNT_ID)
-//        val token = SPUtils.getInstance().getString(Constant.KEY_TOKEN)
-//        val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
+        view = findViewById<View>(R.id.container)
+
+        val account = SPUtils.getInstance().getString(Constant.KEY_ACCOUNT)
+        val pwd = SPUtils.getInstance().getString(Constant.KEY_PASS_CODE)
+        val token = SPUtils.getInstance().getString(Constant.KEY_TOKEN)
+        val expire = SPUtils.getInstance().getString(Constant.KEY_EXPIRE)
 //        val lastLoginTime = SPUtils.getInstance().getLong(Constant.KEY_LOGIN_TIME, 0L)
 //        var canUseToken = true
 //        if (lastLoginTime > 0 && System.currentTimeMillis() >= lastLoginTime) {
@@ -83,68 +85,47 @@ class SplashActivity : BaseActivity() {
 //        Constant.mToken = token
 //        Log.e(TAG, " token = " + token)
 
-//        if (TextUtils.isEmpty(accountId) || TextUtils.isEmpty(token)
-//            || TextUtils.isEmpty(mobile) || !canUseToken) {
-////        if (BuildConfig.DEBUG) {
+        if (TextUtils.isEmpty(account) || TextUtils.isEmpty(pwd)
+            || TextUtils.isEmpty(expire) || TextUtils.isEmpty(token)) {
 //            if (!canUseToken && BuildConfig.DEBUG) {
-//                ToastUtils.showShort("token desire")
-//            }
+            if (BuildConfig.DEBUG) {
+                mHandler?.postDelayed(Runnable {
+                    if (isDestroy()) {
+                        return@Runnable
+                    }
+                    ToastUtils.showShort("token desire")
+                }, 300)
+            }
 //            LogSaver.logToFile("auto login token has desire last login time = $lastLoginTime" + " curTime = " + System.currentTimeMillis())
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 1000)
-//        } else {
-//            val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()
-//            OkGo.getInstance().addCommonHeaders(httpHeaders)
-//            requestDetail(accountId!!, token!!, mobile!!)
-//            mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 3000)
-//        }
+        } else {
+            val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()
+            OkGo.getInstance().addCommonHeaders(httpHeaders)
+            presenter = DashBoardPresenter(this@SplashActivity, object :  DashBoardPresenter.Observer {
+                override fun onSuccess(response: DashboardResponse?) {
+                    if (isDestroy()) {
+                        return
+                    }
+                    var successEnter = false
+                    if (response != null) {
+//                        if (response.account)
+                        successEnter = true
+                    }
+                    mHandler?.sendEmptyMessageDelayed(if (successEnter) TO_MAIN_PAGE else TO_WELCOME_PAGE,100)
+                }
+
+                override fun onFailure(errorMsg: String?) {
+                    mHandler?.sendEmptyMessage(TO_WELCOME_PAGE)
+                }
+
+            })
+            presenter?.requestDetail()
+            mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 3000)
+        }
     }
 
-//    private fun requestDetail(accountId: String, token: String, mobile : String) {
-//        requestTime = System.currentTimeMillis()
-//        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-//        try {
-//            jsonObject.put("accountId", accountId)
-//        } catch (e: JSONException) {
-//            e.printStackTrace()
-//        }
-//        if (BuildConfig.DEBUG) {
-//            Log.i(TAG, " launcher activity ... = " + jsonObject.toString())
-//        }
-//        OkGo.post<String>(Api.GET_ORDER_INFO).tag(TAG)
-//            .upJson(jsonObject)
-//            .execute(object : StringCallback() {
-//                override fun onSuccess(response: Response<String>) {
-//                    if (isFinishing || isDestroyed) {
-//                        return
-//                    }
-//                    var successEnter = false
-//                    val body = response.body()
-//                    if (!TextUtils.isEmpty(body)) {
-//                        val orderInfo: OrderInfoBean? = CheckResponseUtils.checkResponseSuccess(
-//                            response, OrderInfoBean::class.java
-//                        )
-//                        if (orderInfo != null) {
-//                            Constant.mLaunchOrderInfo = orderInfo
-//                            successEnter = true
-//                            Constant.mAccountId = accountId
-//                            Constant.mToken = token
-//                            Constant.mMobile = mobile
-//                        }
-//                    }
-//                    mHandler?.sendEmptyMessageDelayed(if (successEnter) TO_MAIN_PAGE else TO_WELCOME_PAGE,100)
-//                }
-//
-//                override fun onError(response: Response<String>) {
-//                    super.onError(response)
-//                    if (isFinishing || isDestroyed) {
-//                        return
-//                    }
-//                    mHandler?.sendEmptyMessage(TO_WELCOME_PAGE)
-//                }
-//            })
-//    }
-
     override fun onDestroy() {
+        presenter?.onDestroy()
         mHandler?.removeCallbacksAndMessages(null)
         super.onDestroy()
     }

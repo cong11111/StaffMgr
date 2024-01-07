@@ -1,6 +1,7 @@
 package com.loan.staffmgr.global
 
 import android.app.Application
+import com.loan.staffmgr.utils.log.LogSaver
 import com.lzy.okgo.BuildConfig
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cookie.CookieJarImpl
@@ -16,6 +17,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         initOkGo()
+        LogSaver.init(this)
     }
 
     private fun initOkGo() {

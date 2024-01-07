@@ -7,7 +7,7 @@ object Api {
        const val SEND_SMS = "$HOST/v1/admin/captcha"
 
        const val LOGIN = "$HOST/v1/admin/login"
-       const val TEST = "http://srv.chucard.com/v1/start/live"
 
+       const val DASH_BOARD = "$HOST/v1/home/dashboard"
 
 }

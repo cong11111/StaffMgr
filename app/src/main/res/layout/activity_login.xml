@@ -99,13 +99,14 @@
 
                         <com.loan.staffmgr.widget.EditTextContainer
                             android:id="@+id/et_signin_verify"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="62dp"
                             app:select_view_hint="@string/signin_captcha_title"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/iv_signin_verify"
-                            android:layout_width="100dp"
+                            android:layout_width="140dp"
                             android:layout_marginStart="15dp"
                             android:layout_gravity="center_vertical"
                             android:layout_height="30dp"/>

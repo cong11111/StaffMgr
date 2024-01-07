@@ -34,9 +34,11 @@
         <activity android:name=".ui.LoginActivity">
 
         </activity>
+
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true">
+            android:launchMode="singleTask"
+            >
 
         </activity>
     </application>

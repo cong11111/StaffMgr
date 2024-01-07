@@ -42,7 +42,7 @@ public class CodeUtils {
     //padding值
     private static final int BASE_PADDING_LEFT = 10, RANGE_PADDING_LEFT = 15, BASE_PADDING_TOP = 15, RANGE_PADDING_TOP = 20;
     //验证码的默认宽高
-    private static final int DEFAULT_WIDTH = 100, DEFAULT_HEIGHT = 40;
+    private static final int DEFAULT_WIDTH = 130, DEFAULT_HEIGHT = 50;
     //settings decided by the layout xml
     //canvas width and height
     private int width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT;

@@ -27,8 +27,7 @@ import org.json.JSONObject
 class LoginActivity : BaseActivity() {
 
     companion object {
-        val KEY_ACCOUNT = "key_sign_in_account"
-        val KEY_PASS_CODE = "key_sign_in_pass_code"
+
         const val TAG = "LoginActivity"
     }
 
@@ -61,6 +60,19 @@ class LoginActivity : BaseActivity() {
         flCommit?.setOnClickListener {
             checkAndLogin()
         }
+
+        etPhonePwd?.setPassWordMode(true)
+        val account = SPUtils.getInstance().getString(Constant.KEY_ACCOUNT)
+        val pwd = SPUtils.getInstance().getString(Constant.KEY_PASS_CODE)
+        if (!TextUtils.isEmpty(account)) {
+            etPhoneNum?.getEditText()?.setText(account)
+            etPhoneNum?.setSelectionLast()
+            requestVerifyCode(account)
+        }
+        if (!TextUtils.isEmpty(pwd)) {
+            etPhonePwd?.getEditText()?.setText(pwd)
+            etPhonePwd?.setSelectionLast()
+        }
     }
 
     private fun checkAndLogin() {
@@ -89,6 +101,7 @@ class LoginActivity : BaseActivity() {
     private fun requestVerifyCode(mobile : String) {
         val jsonObject = JSONObject()
 //        "test1@icredit.com", "test2@icredit.com", "test3@icredit.com"
+        // hello123
         jsonObject.put("mobile", "test1@icredit.com")
         OkGo.getInstance().cancelTag(TAG)
         OkGo.post<String>(Api.SEND_SMS).tag(TAG)
@@ -104,6 +117,10 @@ class LoginActivity : BaseActivity() {
                     if (captchaResponse == null) {
                         Log.e(TAG, " request verify error ." + response.body())
                         return
+                    }
+                    if (BuildConfig.DEBUG && !TextUtils.isEmpty(captchaResponse?.captcha)) {
+                        etVerify?.getEditText()?.setText(captchaResponse?.captcha)
+                        etVerify?.setSelectionLast()
                     }
                     ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Bitmap?>() {
                         override fun doInBackground(): Bitmap? {
@@ -157,7 +174,7 @@ class LoginActivity : BaseActivity() {
                         Log.e(TAG, " request login error ." + response.body())
                         return
                     }
-                    toHomePage(loginResponse.token, account, pwd)
+                    toHomePage(loginResponse, account, pwd)
                 }
 
                 override fun onError(response: Response<String>) {
@@ -177,10 +194,13 @@ class LoginActivity : BaseActivity() {
             })
     }
 
-    private fun toHomePage(token : String? , account : String, password : String) {
-        Constant.mToken = token
-        SPUtils.getInstance().put(KEY_ACCOUNT, account)
-        SPUtils.getInstance().put(KEY_PASS_CODE, password)
+    private fun toHomePage(login : LoginResponse? , account : String, password : String) {
+        Constant.mToken = login?.token
+        SPUtils.getInstance().put(Constant.KEY_ACCOUNT, account)
+        SPUtils.getInstance().put(Constant.KEY_PASS_CODE, password)
+        SPUtils.getInstance().put(Constant.KEY_TOKEN, Constant.mToken)
+        SPUtils.getInstance().put(Constant.KEY_EXPIRE,login?.expireAt)
+        MainActivity.start(this)
     }
 
 }

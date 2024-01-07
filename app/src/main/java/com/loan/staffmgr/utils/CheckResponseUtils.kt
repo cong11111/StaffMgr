@@ -1,6 +1,7 @@
 package com.loan.staffmgr.utils
 
 import android.text.TextUtils
+import android.util.Log
 import com.alibaba.fastjson.JSONObject
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.staffmgr.BuildConfig
@@ -32,8 +33,12 @@ class CheckResponseUtils {
         fun checkResponseSuccess(response: Response<String>): String? {
             var responseBean: BaseResponseBean? = null
             try {
+                var str = response.body().toString()
+//                Log.e("Test", " str = " + str)
+                // TODO
+                str = str.replace("\n","")
                 responseBean = JSONObject.parseObject(
-                    response.body().toString(),
+                    str,
                     BaseResponseBean::class.java
                 )
             } catch (e: Exception) {
