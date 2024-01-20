@@ -85,4 +85,11 @@ abstract class BaseActivity : AppCompatActivity() {
         lastClickMillions = System.currentTimeMillis()
         return false
     }
+
+    fun replaceFragment(fragment: BaseFragment, containRes: Int) {
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction() // 开启一个事务
+        transaction.replace(containRes, fragment)
+        transaction.commitAllowingStateLoss()
+    }
 }

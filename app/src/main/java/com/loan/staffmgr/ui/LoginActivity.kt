@@ -1,18 +1,28 @@
 package com.loan.staffmgr.ui
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
+import android.telephony.SubscriptionManager
+import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.PermissionUtils.SimpleCallback
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseActivity
+import com.loan.staffmgr.bean.BaseResponseBean
 import com.loan.staffmgr.bean.CaptchaResponse
 import com.loan.staffmgr.bean.LoginResponse
 import com.loan.staffmgr.global.Api
@@ -73,6 +83,11 @@ class LoginActivity : BaseActivity() {
             etPhonePwd?.getEditText()?.setText(pwd)
             etPhonePwd?.setSelectionLast()
         }
+        if (BuildConfig.DEBUG && TextUtils.isEmpty(account) && TextUtils.isEmpty(pwd)) {
+            etPhoneNum?.getEditText()?.setText("test1@icredit.com")
+            etPhonePwd?.getEditText()?.setText("hello123")
+            requestVerifyCode(account)
+        }
     }
 
     private fun checkAndLogin() {
@@ -95,14 +110,27 @@ class LoginActivity : BaseActivity() {
         if (checkClickFast()){
             return
         }
-        login(account!!, pwd!!, authCode!!)
+        PermissionUtils.permission(Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_PHONE_NUMBERS,
+            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_SMS).callback(object : SimpleCallback {
+            override fun onGranted() {
+                login(account!!, pwd!!, authCode!!)
+            }
+
+            override fun onDenied() {
+
+            }
+
+        }).request()
     }
 
     private fun requestVerifyCode(mobile : String) {
         val jsonObject = JSONObject()
 //        "test1@icredit.com", "test2@icredit.com", "test3@icredit.com"
         // hello123
-        jsonObject.put("mobile", "test1@icredit.com")
+        jsonObject.put("mobile", getPhoneNum())
         OkGo.getInstance().cancelTag(TAG)
         OkGo.post<String>(Api.SEND_SMS).tag(TAG)
             .upJson(jsonObject)
@@ -154,11 +182,16 @@ class LoginActivity : BaseActivity() {
             })
     }
 
+    @SuppressLint("MissingPermission")
     private fun login(account : String, pwd : String, captcha : String){
         val jsonObject = JSONObject()
+        var phoneNumber : String? = getPhoneNum()
+//        Log.e("Test", " mobile =  $phoneNumber")
         jsonObject.put("account", account)
         jsonObject.put("password", pwd)
+        jsonObject.put("mobile", phoneNumber)
         jsonObject.put("captcha", captcha)
+        jsonObject.put("appVersionCode", AppUtils.getAppVersionCode())
         OkGo.post<String>(Api.LOGIN).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
@@ -167,7 +200,14 @@ class LoginActivity : BaseActivity() {
                         return
                     }
                     flLoading?.visibility = View.GONE
-
+                    var str = response.body().toString()
+                    // TODO
+                    str = str.replace("\n","")
+                    val responseBean = com.alibaba.fastjson.JSONObject.parseObject(str, BaseResponseBean::class.java)
+                    if (responseBean.code == 998) {
+                        ToastUtils.showShort(responseBean.message)
+                        return
+                    }
                     val loginResponse: LoginResponse? =
                         checkResponseSuccess(response, LoginResponse::class.java)
                     if (loginResponse == null) {
@@ -203,4 +243,18 @@ class LoginActivity : BaseActivity() {
         MainActivity.start(this)
     }
 
+    @SuppressLint("MissingPermission")
+    private fun getPhoneNum(): String? {
+        // TODO
+        if (BuildConfig.DEBUG) {
+            return "2341111111111"
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val manager = this.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
+           return manager.getPhoneNumber(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID)
+        } else {
+            val telephonyManager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            return  telephonyManager.getLine1Number()
+        }
+    }
 }

@@ -5,4 +5,19 @@
     <string name="signin_pwd_title">Password:</string>
     <string name="signin_captcha_title">Captcha code:</string>
     <string name="login_login">Login</string>
+    <string name="dash_board">DashBoard</string>
+    <string name="tickets">Tickets</string>
+
+    <string name="willing_to_pay">Willing to pay</string>
+    <string name="no_willing">Nowilling</string>
+    <string name="not_customer">Not customer</string>
+    <string name="not_receive_money">Not recieve money</string>
+    <string name="already_paid_but_delay">Already paid but delay</string>
+    <string name="partial_pay_first">Partial pay first</string>
+    <string name="not_pick">Not pick</string>
+
+    <string name="take">Take</string>
+    <string name="ring">Ring</string>
+    <string name="does_not_exist">Does not exist</string>
+    <string name="out_of_service">Out of service</string>
 </resources>
