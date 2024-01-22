@@ -14,6 +14,6 @@ object Api {
        //获取催收记录
        const val TICKET_LOG_LIST = "$HOST/v1/ticket/log/list"
        //保存催收记录
-       const val TICKET_LOG_ADD = "$HOST/v1/ticket/log/add"
+       const val SAVE_TICKET_LOG = "$HOST/v1/ticket/log/add"
 
 }

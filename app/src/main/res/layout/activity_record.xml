@@ -116,6 +116,81 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_call_time_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_56">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:text="Call time:"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/cm_dp_20"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_record_call_time"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            tools:text="0s"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/cm_dp_20"
+            android:layout_marginEnd="@dimen/cm_dp_20"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_take_time_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_56">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:text="Take time:"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/cm_dp_20"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_record_take_time"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            tools:text="0s"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/cm_dp_20"
+            android:layout_marginEnd="@dimen/cm_dp_20"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_result_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_56">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:text="Result:"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/cm_dp_20"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_record_result"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            tools:text="result:"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/cm_dp_20"
+            android:layout_marginEnd="@dimen/cm_dp_20"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_feedback_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/cm_dp_56">
@@ -139,6 +214,5 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
 
 </LinearLayout>
