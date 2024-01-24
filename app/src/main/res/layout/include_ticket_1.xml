@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/include_ticket_1_start"
+            android:text="APP NAME:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_app_name"
+            style="@style/include_ticket_end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/include_ticket_1_start"
+            android:text="TICKET ID:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_ticket_id"
+            style="@style/include_ticket_end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/include_ticket_1_start"
+            android:text="NAME:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_name"
+            style="@style/include_ticket_end"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/include_ticket_1_start"
+            android:text="ADDRESS:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_address"
+            style="@style/include_ticket_end"/>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/include_ticket_1_start"
+            android:text="ORDER ID:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_order_id"
+            style="@style/include_ticket_end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="DUE DATE:"
+            style="@style/include_ticket_1_start" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_due_date"
+            style="@style/include_ticket_end"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="REPAY AMOUNT:"
+            style="@style/include_ticket_1_start" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_repay_amount"
+            style="@style/include_ticket_end"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="PRINCIPAL:"
+            style="@style/include_ticket_1_start" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_principal"
+            style="@style/include_ticket_end"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="PENALTY:"
+            style="@style/include_ticket_1_start" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_ticket_1_penalty"
+            style="@style/include_ticket_end"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -2,12 +2,22 @@ package com.loan.staffmgr.ui.fragment
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import com.blankj.utilcode.util.ToastUtils
+import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
 import com.loan.staffmgr.bean.DashboardResponse
+import com.loan.staffmgr.global.Api
+import com.loan.staffmgr.ui.MainActivity
+import com.loan.staffmgr.utils.CheckResponseUtils.Companion.checkResponseSuccess
+import com.lzy.okgo.OkGo
+import com.lzy.okgo.callback.StringCallback
+import com.lzy.okgo.model.Response
+import org.json.JSONObject
 
 class DashBoardFragment : BaseHomeFragment() {
 
@@ -20,6 +30,8 @@ class DashBoardFragment : BaseHomeFragment() {
     private var tvRateFirst : AppCompatTextView? = null
     private var tvRateReloan : AppCompatTextView? = null
     private var tvRank : AppCompatTextView? = null
+
+    var mDashboardResponse : DashboardResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,11 +54,11 @@ class DashBoardFragment : BaseHomeFragment() {
         tvRateReloan = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_rate_reloan)
         tvRank = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_rank)
         bindData()
-
+        requestDashboard()
     }
 
     override fun bindData() {
-        val data = getData() ?: return
+        val data = mDashboardResponse ?: return
         val name = data.account?.name
         val group = data.account?.group
         if (!TextUtils.isEmpty(name)) {
@@ -73,4 +85,36 @@ class DashBoardFragment : BaseHomeFragment() {
         }
     }
 
+    private fun requestDashboard() {
+        val jsonObject = JSONObject()
+        OkGo.post<String>(Api.DASH_BOARD).tag(MainActivity.TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()) {
+                        return
+                    }
+                    val dashboardResponse: DashboardResponse? =
+                        checkResponseSuccess(response, DashboardResponse::class.java)
+                    if (dashboardResponse == null) {
+                        Log.e(MainActivity.TAG, " request dash board error ." + response.body())
+                        return
+                    }
+                    mDashboardResponse = dashboardResponse
+                    bindData()
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (isDestroy()) {
+                        return
+                    }
+                    if (BuildConfig.DEBUG) {
+                        Log.e(MainActivity.TAG, "request dash board failure = " + response.body())
+                    }
+                    ToastUtils.showShort("request dash board failure")
+                }
+            })
+
+    }
 }

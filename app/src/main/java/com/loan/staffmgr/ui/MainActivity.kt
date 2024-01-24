@@ -42,8 +42,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    var mDashboardResponse : DashboardResponse? = null
-
     private var mDashBoardFragment : DashBoardFragment? = null
     private var mTicketFragment : TicketFragment? = null
 
@@ -53,7 +51,6 @@ class MainActivity : BaseActivity() {
         BarUtils.setStatusBarLightMode(this, true)
         setContentView(R.layout.activity_main)
         initView()
-        requestDashboard()
         switchFragment(0)
         initData()
     }
@@ -108,40 +105,4 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun requestDashboard() {
-        val jsonObject = JSONObject()
-        OkGo.post<String>(Api.DASH_BOARD).tag(TAG)
-            .upJson(jsonObject)
-            .execute(object : StringCallback() {
-                override fun onSuccess(response: Response<String>) {
-                    if (isDestroy()) {
-                        return
-                    }
-                    val dashboardResponse: DashboardResponse? =
-                        checkResponseSuccess(response, DashboardResponse::class.java)
-                    if (dashboardResponse == null) {
-                        Log.e(TAG, " request dash board error ." + response.body())
-                        return
-                    }
-                    mDashboardResponse = dashboardResponse
-                    mDashBoardFragment?.bindData()
-                    mTicketFragment?.bindData()
-                }
-
-                override fun onError(response: Response<String>) {
-                    super.onError(response)
-                    if (isDestroy()) {
-                        return
-                    }
-                    if (isFinishing|| isDestroyed) {
-                        return
-                    }
-                    if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "request dash board failure = " + response.body())
-                    }
-                    ToastUtils.showShort("request dash board failure")
-                }
-            })
-
-    }
 }

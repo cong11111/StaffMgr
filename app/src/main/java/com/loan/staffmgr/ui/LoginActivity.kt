@@ -84,8 +84,8 @@ class LoginActivity : BaseActivity() {
             etPhonePwd?.setSelectionLast()
         }
         if (BuildConfig.DEBUG && TextUtils.isEmpty(account) && TextUtils.isEmpty(pwd)) {
-            etPhoneNum?.getEditText()?.setText("test1@icredit.com")
-            etPhonePwd?.getEditText()?.setText("hello123")
+            etPhoneNum?.getEditText()?.setText("Collection2@icredit.com")
+            etPhonePwd?.getEditText()?.setText("Ab!123457")
             requestVerifyCode(account)
         }
     }

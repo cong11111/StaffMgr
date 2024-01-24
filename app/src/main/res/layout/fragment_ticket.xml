@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/cm_dp_20"
+        android:textSize="@dimen/cm_sp_21"
+        android:layout_gravity="center"
+        android:text="Tickets:"
+        android:textAllCaps="true" />
+
+    <include
+        android:layout_width="match_parent"
+        layout="@layout/include_ticket_1"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,13 +24,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/cm_dp_20"
-            android:text="Tickets:"
-            android:textAllCaps="true" />
 
         <Button
             android:id="@+id/btn_test"
