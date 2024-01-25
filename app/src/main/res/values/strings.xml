@@ -20,4 +20,28 @@
     <string name="ring">Ring</string>
     <string name="does_not_exist">Does not exist</string>
     <string name="out_of_service">Out of service</string>
+    <string name="va_link">Dear %s, this is your offline repayment link : %s</string>
+
+    <string name="record">Record</string>
+    <string name="collection_log">Collection Log</string>
+    <string name="ticket_list">Ticket List</string>
+    <string name="copy">Copy</string>
+    <string name="call">Call</string>
+    <string name="records">Records</string>
+    <string name="mobile">Mobile</string>
+    <string name="whats_app">WhatsApp</string>
+    <string name="submit">Submit</string>
+    <string name="no_take_record">No take record</string>
+    <string name="click_to_select">Click to select:</string>
+    <string name="select_time">Select time:</string>
+
+    <string name="there_is_no_corresponding">There is no corresponding call log in this phone ,please complete the call before recording or selecting the correct person.</string>
+
+    <string name="all">All</string>
+    <string name="progressing_ptp">Progressing-PTP</string>
+    <string name="cleared">Cleared</string>
+    <string name="closed">Closed</string>
+    <string name="progressing">Progressing</string>
+    <string name="detail">Detail</string>
+
 </resources>

@@ -21,7 +21,9 @@ class SelectDataDialog : Dialog {
     constructor(context: Context) : super(context, R.style.DialogTheme) {
         val lp = window!!.attributes
         lp.width = (ScreenUtils.getAppScreenWidth() * 3 / 4) //设置宽度
+        lp.height = (ScreenUtils.getAppScreenHeight() * 3 / 5) //设置宽度
         window!!.attributes = lp
+
         setContentView(R.layout.dialog_select_data)
         rvSelectData = findViewById(R.id.rv_select_data)
         val layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false)

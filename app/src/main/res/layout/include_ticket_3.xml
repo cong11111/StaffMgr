@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bg_radius_white_15"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="VA LINK:"
+            style="@style/tv_item_title"
+            android:layout_marginTop="@dimen/cm_dp_15" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/cm_dp_20"
+            android:layout_marginBottom="@dimen/cm_dp_15"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_ticket3_desc"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/va_link"
+                android:textSize="@dimen/cm_sp_20"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/cm_dp_20"
+                android:layout_marginEnd="@dimen/cm_dp_20"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_ticket3_va_link_copy"
+                android:text="@string/copy"
+                style="@style/tv_copy_style"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/cm_dp_10" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_50"/>
+
+
+</LinearLayout>

@@ -1,274 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#F5F5F5"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="match_parent"
+
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Account info:"
-            android:textAllCaps="true" />
-
-        <LinearLayout
+            android:text="@string/dash_board"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="15dp"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/cm_dp_20"
+            android:includeFontPadding="false"
+            android:textSize="@dimen/cm_sp_26"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="name:"
-                android:textAllCaps="true" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_dashboard_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="15dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="15dp"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="group:"
-                android:textAllCaps="true" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_dashboard_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="15dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:text="Collection Dashboard"
-                android:textAllCaps="true"
-                android:layout_height="wrap_content"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center_vertical"
-                android:text="ASSIGN AMOUNT:"
-                android:textAllCaps="true" />
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="First Loan:"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_dashboard_assign_first"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reloan:"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_dashboard_assign_reloan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="REPAY AMOUNT:"
-                android:textAllCaps="true" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="@dimen/cm_dp_15"
+                android:layout_marginEnd="@dimen/cm_dp_15"
+                android:layout_marginTop="@dimen/cm_dp_20"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_radius_white_15"
+                    android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="First Loan:"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
+                        android:text="Account info:"
+                        style="@style/tv_item_title" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_dashboard_repay_first"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
+                    <LinearLayout style="@style/ll_item_container">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:text="Name:"
+                            style="@style/tv_item_container_name" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_dashboard_name"
+                            style="@style/tv_item_container_desc" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/ll_item_container"
+                        android:layout_marginBottom="@dimen/cm_dp_15">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/tv_item_container_name"
+                            android:text="Group:" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_dashboard_desc"
+                            style="@style/tv_item_container_desc" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/cm_dp_20"
+                    android:background="@drawable/bg_radius_white_15"
+                    android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reloan:"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
+                        android:text="Collection Dashboard"
+                        style="@style/tv_item_title" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_dashboard_repay_reloan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
+                        android:text="ASSIGN AMOUNT:"
+                        style="@style/tv_item_title_1" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cm_dp_52"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/cm_dp_15"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/tv_item_container_name"
+                                android:text="First Loan:" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_dashboard_assign_first"
+                                style="@style/tv_item_container_desc" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:text="Reloan:"
+                                style="@style/tv_item_container_name" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_dashboard_assign_reloan"
+                                style="@style/tv_item_container_desc"  />
+
+                        </LinearLayout>
 
 
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="REPAY RATE:"
-                android:textAllCaps="true" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="First Loan:"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_dashboard_rate_first"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_height="match_parent">
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reloan:"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
+                        style="@style/tv_item_title_1"
+                        android:text="REPAY AMOUNT:" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/cm_dp_15"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/tv_item_container_name"
+                                android:text="First Loan:" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_dashboard_repay_first"
+                                style="@style/tv_item_container_desc" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/tv_item_container_name"
+                                android:text="Reloan:" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_dashboard_repay_reloan"
+                                style="@style/tv_item_container_desc" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_dashboard_rate_reloan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15dp" />
+                        style="@style/tv_item_title_1"
+                        android:text="REPAY RATE:" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/cm_dp_15"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/tv_item_container_name"
+                                android:text="First Loan:" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_dashboard_rate_first"
+                                style="@style/tv_item_container_desc" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/tv_item_container_name"
+                                android:text="Reloan:" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_dashboard_rate_reloan"
+                                style="@style/tv_item_container_desc" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/tv_item_title_1"
+                        android:text="CURRENT RANK:" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_dashboard_rank"
+                        style="@style/tv_item_container_desc"
+                        android:gravity="start"
+                        android:layout_marginTop="@dimen/cm_dp_10"
+                        android:layout_marginBottom="@dimen/cm_dp_10"
+                        android:layout_gravity="start"
+                        android:text="10" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="CURRENT RANK:"
-                android:textAllCaps="true" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_dashboard_rank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="10"
-                android:textAllCaps="true" />
-
-        </LinearLayout>
-
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/fl_dash_board_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone">
 
-</LinearLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp" />
+
+    </FrameLayout>
+
+</FrameLayout>

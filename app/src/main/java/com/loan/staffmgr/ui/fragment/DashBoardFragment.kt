@@ -30,6 +30,7 @@ class DashBoardFragment : BaseHomeFragment() {
     private var tvRateFirst : AppCompatTextView? = null
     private var tvRateReloan : AppCompatTextView? = null
     private var tvRank : AppCompatTextView? = null
+    private var flLoading : View? = null
 
     var mDashboardResponse : DashboardResponse? = null
 
@@ -53,6 +54,8 @@ class DashBoardFragment : BaseHomeFragment() {
         tvRateFirst = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_rate_first)
         tvRateReloan = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_rate_reloan)
         tvRank = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_rank)
+        flLoading = view.findViewById<View>(R.id.fl_dash_board_loading)
+
         bindData()
         requestDashboard()
     }
@@ -86,6 +89,7 @@ class DashBoardFragment : BaseHomeFragment() {
     }
 
     private fun requestDashboard() {
+        flLoading?.visibility = View.VISIBLE
         val jsonObject = JSONObject()
         OkGo.post<String>(Api.DASH_BOARD).tag(MainActivity.TAG)
             .upJson(jsonObject)
@@ -94,6 +98,7 @@ class DashBoardFragment : BaseHomeFragment() {
                     if (isDestroy()) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     val dashboardResponse: DashboardResponse? =
                         checkResponseSuccess(response, DashboardResponse::class.java)
                     if (dashboardResponse == null) {
@@ -109,6 +114,7 @@ class DashBoardFragment : BaseHomeFragment() {
                     if (isDestroy()) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     if (BuildConfig.DEBUG) {
                         Log.e(MainActivity.TAG, "request dash board failure = " + response.body())
                     }

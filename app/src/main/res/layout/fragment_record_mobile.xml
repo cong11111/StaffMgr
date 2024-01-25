@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_target_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cm_dp_56"
+            android:layout_marginStart="@dimen/cm_dp_20">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/include_ticket_1_start"
+                android:text="Target:" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-15dp"
+                android:layout_weight="5"
+                android:background="@drawable/bg_black_radius_25"
+                android:orientation="horizontal"
+                android:paddingStart="15dp"
+                android:paddingTop="@dimen/cm_dp_8"
+                android:paddingBottom="@dimen/cm_dp_8">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_record_target"
+                    style="@style/include_ticket_end"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:gravity="center_vertical|start"
+                    android:text="Click to select:"
+                    tools:text="Click to select:" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/cm_dp_28"
+                    android:src="@drawable/bottom_arrow"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="@dimen/cm_dp_10"
+                    android:layout_height="@dimen/cm_dp_28"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_record_data"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/cm_dp_20"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_call_time_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cm_dp_56"
+                    android:layout_marginStart="@dimen/cm_dp_20">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/include_ticket_1_start"
+                        android:text="Call time:" />
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/bg_black_radius_25"
+                        android:orientation="horizontal"
+                        android:paddingStart="15dp"
+                        android:paddingTop="@dimen/cm_dp_8"
+                        android:paddingBottom="@dimen/cm_dp_8">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_record_call_time"
+                            style="@style/include_ticket_end"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:gravity="center_vertical|start"
+                            android:layout_marginStart="0dp"
+                            android:text="Click to select:"
+                            tools:text="Click to select:" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/cm_dp_28"
+                            android:src="@drawable/bottom_arrow"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_marginEnd="@dimen/cm_dp_10"
+                            android:layout_height="@dimen/cm_dp_28"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_result_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cm_dp_56"
+                    android:layout_marginStart="@dimen/cm_dp_20">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/include_ticket_1_start"
+                        android:text="Result:" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_record_result"
+                        style="@style/include_ticket_end"
+                        tools:text="result:" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_take_time_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cm_dp_56"
+                    android:layout_marginStart="@dimen/cm_dp_20">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/include_ticket_1_start"
+                        android:text="Take time:" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_record_take_time"
+                        style="@style/include_ticket_end"
+                        tools:text="0s" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_feedback_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cm_dp_56"
+                    android:layout_marginTop="@dimen/cm_dp_30"
+                    android:layout_marginStart="@dimen/cm_dp_20">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/include_ticket_1_start"
+                        android:textColor="@drawable/selector_tv_record"
+                        android:text="Feedback:" />
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/selector_text_radius_25"
+                        android:orientation="horizontal"
+                        android:paddingStart="15dp"
+                        android:paddingTop="@dimen/cm_dp_8"
+                        android:paddingBottom="@dimen/cm_dp_8">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_record_feedback"
+                            style="@style/include_ticket_end"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:gravity="center_vertical|start"
+                            android:layout_marginStart="0dp"
+                            android:textColor="@drawable/selector_tv_record"
+                            android:text="@string/click_to_select"
+                            tools:text="Click to select:" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/cm_dp_28"
+                            android:src="@drawable/selector_bottom_arrow"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_marginEnd="@dimen/cm_dp_10"
+                            android:layout_height="@dimen/cm_dp_28"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_promise_time_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cm_dp_56"
+                    android:layout_marginTop="@dimen/cm_dp_30"
+                    android:layout_marginStart="@dimen/cm_dp_20">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/include_ticket_1_start"
+                        android:textColor="@drawable/selector_tv_record"
+                        android:text="Promise Time:" />
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="-15dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/selector_text_radius_25"
+                        android:orientation="horizontal"
+                        android:paddingStart="15dp"
+                        android:paddingTop="@dimen/cm_dp_8"
+                        android:paddingBottom="@dimen/cm_dp_8">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_promise_time_container"
+                            style="@style/include_ticket_end"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="0dp"
+                            android:gravity="center_vertical|start"
+                            android:text="@string/select_time"
+                            android:textColor="@drawable/selector_tv_record"
+                            tools:text="@string/select_time" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/ll_note_container"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/cm_dp_56"-->
+<!--                    android:layout_marginStart="@dimen/cm_dp_20">-->
+
+<!--                    <androidx.appcompat.widget.AppCompatTextView-->
+<!--                        style="@style/include_ticket_1_start"-->
+<!--                        android:text="Notes:" />-->
+
+<!--                    <androidx.appcompat.widget.AppCompatTextView-->
+<!--                        android:id="@+id/tv_note"-->
+<!--                        style="@style/include_ticket_end"-->
+<!--                        tools:text="" />-->
+
+<!--                </LinearLayout>-->
+
+                <include
+                    layout="@layout/item_edit_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_record_nodata"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/cm_dp_35"
+                    android:layout_marginEnd="@dimen/cm_dp_35"
+                    android:layout_marginBottom="@dimen/cm_dp_20"
+                    android:gravity="center"
+                    android:text="@string/there_is_no_corresponding"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/cm_sp_20" />
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_record_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_56"
+        android:layout_marginStart="@dimen/cm_dp_25"
+        android:layout_marginTop="@dimen/cm_dp_25"
+        android:layout_marginEnd="@dimen/cm_dp_25"
+        android:layout_marginBottom="@dimen/cm_dp_25"
+        android:background="@drawable/selector_commit_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/submit"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+        <!--        android:text="@string/signin_login"-->
+
+    </FrameLayout>
+
+</LinearLayout>

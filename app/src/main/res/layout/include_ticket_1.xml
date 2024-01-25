@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_radius_white_15"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:layout_marginTop="@dimen/cm_dp_20"
         style="@style/include_ticket_1_container">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -55,18 +57,31 @@
             style="@style/include_ticket_end"/>
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <LinearLayout style="@style/include_ticket_1_container">
+        <LinearLayout style="@style/include_ticket_1_container">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/include_ticket_1_start"
+                android:text="ORDER ID:" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_ticket_1_order_id"
+                style="@style/include_ticket_end" />
+
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/include_ticket_1_start"
-            android:text="ORDER ID:" />
+            android:id="@+id/tv_ticket1_orderid_copy"
+            android:text="@string/copy"
+            android:layout_marginStart="@dimen/cm_dp_10"
+            android:layout_marginEnd="@dimen/cm_dp_10"
+            android:layout_alignParentEnd="true"
+            style="@style/tv_copy_style" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_ticket_1_order_id"
-            style="@style/include_ticket_end" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         style="@style/include_ticket_1_container">
@@ -108,6 +123,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginBottom="@dimen/cm_dp_20"
         style="@style/include_ticket_1_container">
 
         <androidx.appcompat.widget.AppCompatTextView

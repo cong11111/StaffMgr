@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/item1"
-        android:icon="@drawable/selector_dashboard"
+        android:icon="@drawable/dashboard_unselect"
         android:title="@string/dash_board"/>
     <item android:id="@+id/item2"
-        android:icon="@drawable/selector_telephone"
+        android:icon="@drawable/telephone_unselect"
         android:title="@string/tickets"/>
 
 </menu>

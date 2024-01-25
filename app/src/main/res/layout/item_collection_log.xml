@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_radius_white_15"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/cm_dp_8"
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title_1"
+            style="@style/include_ticket_1_start"
+            android:text="APP NAME:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_desc_1"
+            style="@style/include_ticket_end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/cm_dp_8"
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title_2"
+            style="@style/include_ticket_1_start"
+            android:text="APP NAME:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_desc_2"
+            style="@style/include_ticket_end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/cm_dp_8"
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title_3"
+            style="@style/include_ticket_1_start"
+            android:text="APP NAME:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_desc_3"
+            style="@style/include_ticket_end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/cm_dp_8"
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title_4"
+            style="@style/include_ticket_1_start"
+            android:text="APP NAME:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_desc_4"
+            style="@style/include_ticket_end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/cm_dp_8"
+        style="@style/include_ticket_1_container">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title_5"
+            style="@style/include_ticket_1_start"
+            android:text="APP NAME:" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_desc_5"
+            style="@style/include_ticket_end"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:textSize="@dimen/cm_sp_18"
+            android:gravity="center_vertical|start"
+            android:autoSizeMaxTextSize="@dimen/cm_sp_18"
+            android:autoSizeMinTextSize="1sp"
+            android:autoSizeStepGranularity= "1sp"
+            android:autoSizeTextType="uniform"
+            />
+
+    </LinearLayout>
+
+<!--    <View-->
+<!--        style="@style/view_divide"/>-->
+
+</LinearLayout>

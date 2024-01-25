@@ -10,23 +10,86 @@
     <style name="include_ticket_1_container">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/cm_dp_42</item>
+        <item name="android:layout_marginStart">@dimen/cm_dp_15</item>
         <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="include_ticket_1_start">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">2</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textSize">@dimen/cm_sp_18</item>
     </style>
 
     <style name="include_ticket_end">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">5</item>
+        <item name="android:gravity">start</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginStart">@dimen/cm_dp_15</item>
+    </style>
+
+    <style name="tv_item_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:layout_marginTop">@dimen/cm_dp_20</item>
+        <item name="android:textSize">@dimen/cm_sp_20</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ll_item_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/cm_dp_52</item>
+        <item name="android:layout_marginStart">@dimen/cm_dp_15</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="tv_item_container_name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textSize">@dimen/cm_sp_18</item>
+    </style>
+
+    <style name="tv_item_container_desc">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textSize">@dimen/cm_sp_18</item>
         <item name="android:layout_marginStart">15dp</item>
+    </style>
+
+    <style name="tv_item_title_1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">@dimen/cm_dp_15</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/cm_sp_20</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="tv_copy_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingTop">@dimen/cm_dp_10</item>
+        <item name="android:paddingBottom">@dimen/cm_dp_10</item>
+        <item name="android:paddingStart">@dimen/cm_dp_20</item>
+        <item name="android:paddingEnd">@dimen/cm_dp_20</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:background">@drawable/bg_radius_theme_15</item>
     </style>
 
 </resources>

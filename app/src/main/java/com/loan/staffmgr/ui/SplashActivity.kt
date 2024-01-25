@@ -99,6 +99,7 @@ class SplashActivity : BaseActivity() {
 //            LogSaver.logToFile("auto login token has desire last login time = $lastLoginTime" + " curTime = " + System.currentTimeMillis())
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 1000)
         } else {
+            Constant.mToken = token
             val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()
             OkGo.getInstance().addCommonHeaders(httpHeaders)
             presenter = DashBoardPresenter(this@SplashActivity, object :  DashBoardPresenter.Observer {
@@ -108,7 +109,6 @@ class SplashActivity : BaseActivity() {
                     }
                     var successEnter = false
                     if (response != null) {
-//                        if (response.account)
                         successEnter = true
                     }
                     mHandler?.sendEmptyMessageDelayed(if (successEnter) TO_MAIN_PAGE else TO_WELCOME_PAGE,100)

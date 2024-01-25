@@ -2,17 +2,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_corner_light_custom_dialog_bg"
-    android:maxHeight="300dp">
+    android:background="@drawable/shape_corner_light_custom_dialog_bg">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxHeight="@dimen/cm_dp_350"
         android:background="@drawable/shape_corner_light_custom_dialog_bg">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_select_data"
             android:layout_width="match_parent"
+            android:maxHeight="@dimen/cm_dp_350"
             android:layout_height="wrap_content" />
 
     </FrameLayout>

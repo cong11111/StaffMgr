@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="#F5F5F5"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_56">
+
+        <ImageView
+            android:id="@+id/iv_ticket_back"
+            android:layout_width="@dimen/cm_dp_32"
+            android:layout_height="@dimen/cm_dp_32"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:padding="4dp"
+            android:src="@drawable/btn_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/cm_dp_20"
+            android:includeFontPadding="false"
+            android:text="@string/ticket_list"
+            android:textColor="@color/black"
+            android:textSize="@dimen/cm_sp_26"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_height="wrap_content">
+
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/spinner_ticket_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:gravity="center"
+            android:hint="@string/all"
+            android:textColor="#444444"
+            android:textSize="@dimen/cm_sp_18"
+            app:backgroundSelector="@drawable/background_selector" />
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_ticket_list_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginStart="@dimen/cm_dp_15"
+        android:layout_marginEnd="@dimen/cm_dp_15"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

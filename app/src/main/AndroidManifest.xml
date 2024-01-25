@@ -59,6 +59,20 @@
 
         <activity android:name=".ui.DebugActivity"
             android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".ui.CollectionLogActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.record.InputActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.TicketListActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

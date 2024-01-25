@@ -6,6 +6,7 @@ import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.base.BaseActivity
 import com.loan.staffmgr.bean.DashboardResponse
 import com.loan.staffmgr.global.Api
+import com.loan.staffmgr.global.Constant
 import com.loan.staffmgr.ui.LoginActivity
 import com.loan.staffmgr.utils.CheckResponseUtils
 import com.lzy.okgo.OkGo
@@ -21,16 +22,17 @@ class DashBoardPresenter(var activity: BaseActivity?, var observer: Observer?) {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    val response: DashboardResponse? =
+                    val responseBean: DashboardResponse? =
                         CheckResponseUtils.checkResponseSuccess(response, DashboardResponse::class.java)
-                    if (response == null) {
+                    if (responseBean == null) {
                         Log.e(LoginActivity.TAG, " request dash board error ." + response)
                         return
                     }
                     if (activity == null || activity!!.isDestroy()) {
                         return
                     }
-                    observer?.onSuccess(response)
+                    Constant.mName = responseBean.account?.name
+                    observer?.onSuccess(responseBean)
                 }
 
                 override fun onError(response: Response<String>) {

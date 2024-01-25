@@ -3,29 +3,42 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:text="Records"
-        android:textAllCaps="true"
-        android:textSize="16sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_56">
+
+        <ImageView
+            android:id="@+id/iv_record_back"
+            android:layout_width="@dimen/cm_dp_32"
+            android:layout_height="@dimen/cm_dp_32"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:padding="4dp"
+            android:src="@drawable/btn_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/tv_item_title"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/cm_dp_20"
+            android:includeFontPadding="false"
+            android:text="@string/records"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="56dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Record:"
-            android:layout_marginStart="15dp"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"/>
+        android:layout_marginTop="@dimen/cm_dp_15"
+        android:layout_height="@dimen/cm_dp_56">
 
         <FrameLayout
             android:layout_width="0dp"
@@ -35,27 +48,24 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/ll_record_mobile"
+                android:layout_width="@dimen/cm_dp_120"
                 android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_splash_logo"
-                    android:layout_height="30dp"/>
+                android:layout_gravity="end|center_vertical"
+                android:gravity="end|center_vertical"
+                android:background="@drawable/selector_radius_left_15"
+                android:paddingEnd="@dimen/cm_dp_10"
+                android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:text="Mobile"
-                    android:layout_marginStart="8dp"
+                    android:text="@string/mobile"
+                    android:textColor="@drawable/selector_record_tv_color"
+                    android:textSize="@dimen/cm_sp_18"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
-
-
 
         </FrameLayout>
 
@@ -67,20 +77,18 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_splash_logo"
-                    android:layout_height="30dp"/>
+                android:id="@+id/ll_record_whatapp"
+                android:layout_width="@dimen/cm_dp_120"
+                android:layout_gravity="center_vertical|start"
+                android:paddingStart="@dimen/cm_dp_10"
+                android:background="@drawable/selector_radius_right_15"
+                android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:text="WhatsApp"
-                    android:layout_marginStart="8dp"
+                    android:text="@string/whats_app"
+                    android:textColor="@drawable/selector_record_tv_color"
+                    android:textSize="@dimen/cm_sp_18"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"/>
 
@@ -90,129 +98,20 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_target_container"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/cm_dp_56">
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/cm_dp_15"
+        android:layout_marginStart="@dimen/cm_dp_15"
+        android:layout_marginEnd="@dimen/cm_dp_15"
+        android:layout_height="0dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Target:"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
+        <com.loan.staffmgr.widget.NoScrollViewPager
+            android:id="@+id/vp_record_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_radius_white_15" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_record_target"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            tools:text="target:"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_marginEnd="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_call_time_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/cm_dp_56">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Call time:"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_record_call_time"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            tools:text="0s"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_marginEnd="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_take_time_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/cm_dp_56">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Take time:"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_record_take_time"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            tools:text="0s"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_marginEnd="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_result_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/cm_dp_56">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Result:"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_record_result"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            tools:text="result:"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_marginEnd="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_feedback_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/cm_dp_56">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Feedback:"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_record_feedback"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            tools:text="Feedback:"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/cm_dp_20"
-            android:layout_marginEnd="@dimen/cm_dp_20"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

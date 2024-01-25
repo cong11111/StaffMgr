@@ -15,5 +15,6 @@ object Api {
        const val TICKET_LOG_LIST = "$HOST/v1/ticket/log/list"
        //保存催收记录
        const val SAVE_TICKET_LOG = "$HOST/v1/ticket/log/add"
+       const val GET_CONFIG = "$HOST/v1/ticket/dict"
 
 }

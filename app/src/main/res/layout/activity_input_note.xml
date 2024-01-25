@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_edit_note_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/bg_white_16"
+                app:layout_constraintBottom_toBottomOf="@id/view_diary_edit_note1"
+                app:layout_constraintTop_toTopOf="@id/view_diary_edit_note_top" />
+
+            <Space
+                android:id="@+id/view_diary_edit_note_top"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_diary_edit_note_title"
+                android:layout_height="@dimen/dp_16"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_diary_edit_note_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_14"
+                android:includeFontPadding="false"
+                android:text="Notes:"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintTop_toBottomOf="@id/view_diary_edit_note_top"
+                app:layout_constraintBottom_toTopOf="@id/et_diary_edit_note_content" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_diary_edit_note_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/bg_white2_16"
+                android:gravity="top"
+                android:padding="@dimen/cm_dp_12"
+                android:singleLine="false"
+                app:layout_constraintBottom_toTopOf="@id/view_diary_edit_note1"
+                app:layout_constraintDimensionRatio="w,125:317"
+                app:layout_constraintTop_toBottomOf="@id/tv_diary_edit_note_title" />
+
+            <View
+                android:id="@+id/view_diary_edit_note1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_15"
+                app:layout_constraintBottom_toTopOf="@id/view_diary_edit_note"
+                app:layout_constraintTop_toBottomOf="@id/et_diary_edit_note_content" />
+
+            <View
+                android:id="@+id/view_diary_edit_note"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_34"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_diary_edit_note1" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cm_dp_56"
+        android:layout_marginStart="@dimen/cm_dp_25"
+        android:layout_marginTop="@dimen/cm_dp_25"
+        android:layout_marginEnd="@dimen/cm_dp_25"
+        android:layout_marginBottom="@dimen/cm_dp_25"
+        android:background="@drawable/selector_commit_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/submit"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+        <!--        android:text="@string/signin_login"-->
+
+    </FrameLayout>
+
+</LinearLayout>
