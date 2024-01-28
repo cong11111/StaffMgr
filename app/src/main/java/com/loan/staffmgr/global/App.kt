@@ -56,7 +56,7 @@ class App : Application() {
         builder.connectTimeout(20000, TimeUnit.MILLISECONDS)
         //使用数据库保持cookie，如果cookie不过期，则一直有效
         builder.cookieJar(CookieJarImpl(DBCookieStore(this)))
-        if (com.loan.staffmgr.BuildConfig.DEBUG) {
+        if (com.loan.staffmgr.BuildConfig.DEBUG || true) {
             val loggingInterceptor = HttpLoggingInterceptor("OkHttpClient")
             //log打印级别，决定了log显示的详细程度
             loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY)

@@ -88,6 +88,20 @@ class LoginActivity : BaseActivity() {
             etPhonePwd?.getEditText()?.setText("Ab!123457")
             requestVerifyCode(account)
         }
+
+        PermissionUtils.permission(Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_PHONE_NUMBERS,
+            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_SMS).callback(object : SimpleCallback {
+            override fun onGranted() {
+            }
+
+            override fun onDenied() {
+
+            }
+
+        }).request()
     }
 
     private fun checkAndLogin() {
@@ -186,6 +200,10 @@ class LoginActivity : BaseActivity() {
     private fun login(account : String, pwd : String, captcha : String){
         val jsonObject = JSONObject()
         var phoneNumber : String? = getPhoneNum()
+        if (TextUtils.isEmpty(phoneNumber)){
+            ToastUtils.showShort("Can not read sim")
+            return
+        }
 //        Log.e("Test", " mobile =  $phoneNumber")
         jsonObject.put("account", account)
         jsonObject.put("password", pwd)
@@ -245,16 +263,18 @@ class LoginActivity : BaseActivity() {
 
     @SuppressLint("MissingPermission")
     private fun getPhoneNum(): String? {
-        // TODO
-        if (BuildConfig.DEBUG) {
-            return "2341111111111"
-        }
+        var number : String
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val manager = this.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
-           return manager.getPhoneNumber(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID)
+            number = manager.getPhoneNumber(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID)
         } else {
             val telephonyManager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            return  telephonyManager.getLine1Number()
+            number =  telephonyManager.getLine1Number()
         }
+        // TODO
+        if (number.startsWith("+86")){
+            number = "2341111111111"
+        }
+        return number
     }
 }
