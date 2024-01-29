@@ -40,6 +40,9 @@ import com.loan.staffmgr.utils.CheckResponseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import org.json.JSONObject
 
 class TicketFragment : BaseHomeFragment() {
@@ -81,6 +84,8 @@ class TicketFragment : BaseHomeFragment() {
     private var tvMyPhoneNum : AppCompatTextView? = null
     private var tvMyCallCount : AppCompatTextView? = null
     private var tvListTitle : AppCompatTextView? = null
+    private var mRefreshLayout : SmartRefreshLayout? = null
+    private var flLoading : FrameLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,6 +99,7 @@ class TicketFragment : BaseHomeFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvAppName = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_app_name)
+        mRefreshLayout = view.findViewById<SmartRefreshLayout>(R.id.refresh_ticket)
         tvTicketId = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_ticket_id)
         tvName = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_name)
         tvAddrress = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_address)
@@ -121,6 +127,7 @@ class TicketFragment : BaseHomeFragment() {
         tvOrderIdCopy = view.findViewById<AppCompatTextView>(R.id.tv_ticket1_orderid_copy)
         tvPageNum = view.findViewById<AppCompatTextView>(R.id.tv_ticket_pagenum)
         scrollView = view.findViewById<NestedScrollView>(R.id.nested_scroll_view)
+        flLoading = view.findViewById<FrameLayout>(R.id.fl_ticket_loading)
 
         rvContent?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         mTicketAdapter = TicketAdapter(mUiContactLists, this)
@@ -182,7 +189,17 @@ class TicketFragment : BaseHomeFragment() {
             }
 
         })
+        mRefreshLayout?.setEnableLoadMore(false)
+        mRefreshLayout?.setEnableRefresh(true)
+        mRefreshLayout?.setOnRefreshListener(object : OnRefreshListener {
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                requestTickets()
+            }
+
+        })
         bindData()
+        mRefreshLayout?.autoRefresh()
+
         mActivityResultLauncher =  registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
@@ -196,7 +213,7 @@ class TicketFragment : BaseHomeFragment() {
             scrollView?.smoothScrollTo(0,0)
             bindData()
         }
-        requestTickets()
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -205,6 +222,7 @@ class TicketFragment : BaseHomeFragment() {
     }
 
     private fun requestTickets() {
+        flLoading?.visibility = View.VISIBLE
         val jsonObject = JSONObject()
         OkGo.post<String>(Api.TICKETS).tag(TAG)
             .upJson(jsonObject)
@@ -213,6 +231,8 @@ class TicketFragment : BaseHomeFragment() {
                     if (isDestroy()) {
                         return
                     }
+                    mRefreshLayout?.finishRefresh()
+                    flLoading?.visibility = View.GONE
                     val responseStr = CheckResponseUtils.checkResponseSuccess(response)
                     if (TextUtils.isEmpty(responseStr)) {
                         handleError()
@@ -233,6 +253,8 @@ class TicketFragment : BaseHomeFragment() {
                     if (isDestroy()) {
                         return
                     }
+                    mRefreshLayout?.finishRefresh()
+                    flLoading?.visibility = View.GONE
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, "request  tickets failure = " + response.body())
                     }
@@ -278,7 +300,7 @@ class TicketFragment : BaseHomeFragment() {
             tvName?.text = ticket?.name.toString()
             tvAddrress?.text = ticket?.address.toString()
             tvOrderId?.text = ticket?.order_id.toString()
-            tvDueDate?.text = ticket?.due_date.toString()
+            tvDueDate?.text = ticket?.due_date.toString() + "    " + ticket?.due_days + " DAYS"
             tvRepayAmount?.text = ticket?.repay_amount.toString()
             tvPrincipal?.text = ticket?.principal.toString()
             tvPenalty?.text = ticket?.penalty.toString()

@@ -17,6 +17,9 @@ import com.loan.staffmgr.utils.CheckResponseUtils.Companion.checkResponseSuccess
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import org.json.JSONObject
 
 class DashBoardFragment : BaseHomeFragment() {
@@ -30,6 +33,7 @@ class DashBoardFragment : BaseHomeFragment() {
     private var tvRateFirst : AppCompatTextView? = null
     private var tvRateReloan : AppCompatTextView? = null
     private var tvRank : AppCompatTextView? = null
+    private var mRefreshLayout : SmartRefreshLayout? = null
     private var flLoading : View? = null
 
     var mDashboardResponse : DashboardResponse? = null
@@ -46,6 +50,7 @@ class DashBoardFragment : BaseHomeFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvTitle = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_name)
+        mRefreshLayout = view.findViewById<SmartRefreshLayout>(R.id.refresh_dash_board)
         tvDesc = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_desc)
         tvAssignFirst = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_assign_first)
         tvAssignReloan = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_assign_reloan)
@@ -56,8 +61,17 @@ class DashBoardFragment : BaseHomeFragment() {
         tvRank = view.findViewById<AppCompatTextView>(R.id.tv_dashboard_rank)
         flLoading = view.findViewById<View>(R.id.fl_dash_board_loading)
 
+        mRefreshLayout?.setEnableLoadMore(false)
+        mRefreshLayout?.setEnableRefresh(true)
+        mRefreshLayout?.setHeaderTriggerRate(3f)
+        mRefreshLayout?.setOnRefreshListener(object : OnRefreshListener {
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                requestDashboard()
+            }
+
+        })
         bindData()
-        requestDashboard()
+        mRefreshLayout?.autoRefresh()
     }
 
     override fun bindData() {
@@ -99,6 +113,7 @@ class DashBoardFragment : BaseHomeFragment() {
                         return
                     }
                     flLoading?.visibility = View.GONE
+                    mRefreshLayout?.finishRefresh()
                     val dashboardResponse: DashboardResponse? =
                         checkResponseSuccess(response, DashboardResponse::class.java)
                     if (dashboardResponse == null) {
@@ -115,6 +130,7 @@ class DashBoardFragment : BaseHomeFragment() {
                         return
                     }
                     flLoading?.visibility = View.GONE
+                    mRefreshLayout?.finishRefresh()
                     if (BuildConfig.DEBUG) {
                         Log.e(MainActivity.TAG, "request dash board failure = " + response.body())
                     }
