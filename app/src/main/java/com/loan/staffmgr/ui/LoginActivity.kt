@@ -47,6 +47,10 @@ class LoginActivity : BaseActivity() {
     private var etPhonePwd : EditTextContainer? = null
     private var etVerify : EditTextContainer? = null
     private var flCommit : FrameLayout? = null
+    private var ivShowPwd : AppCompatImageView? = null
+
+    private var mCurCaptha : String? = null
+    private var passwordMode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,30 +58,34 @@ class LoginActivity : BaseActivity() {
         ivVerify = findViewById<AppCompatImageView>(R.id.iv_signin_verify)
         flLoading = findViewById<View>(R.id.fl_siginin_loading)
         etPhoneNum = findViewById<EditTextContainer>(R.id.et_signin_phone_num)
+        ivShowPwd = findViewById<AppCompatImageView>(R.id.iv_signin_show_pwd)
         etPhonePwd = findViewById<EditTextContainer>(R.id.et_signin_pwd)
         etVerify = findViewById<EditTextContainer>(R.id.et_signin_verify)
         flCommit = findViewById<FrameLayout>(R.id.fl_signin_commit)
 
         etPhoneNum?.getEditText()?.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                val str = etPhoneNum?.getText()
-                if (!TextUtils.isEmpty(str)){
-                    requestVerifyCode(str!!)
-                }
+
             }
         }
 
         flCommit?.setOnClickListener {
             checkAndLogin()
         }
-
+        ivShowPwd?.setOnClickListener{
+            passwordMode = !passwordMode
+            etPhonePwd?.setPassWordMode(passwordMode)
+            if (ivShowPwd != null) {
+                var icLogo:Int = if (passwordMode) R.drawable.ic_show_pwd else R.drawable.ic_hide_pwd
+                ivShowPwd?.setImageResource(icLogo)
+            }
+        }
         etPhonePwd?.setPassWordMode(true)
         val account = SPUtils.getInstance().getString(Constant.KEY_ACCOUNT)
         val pwd = SPUtils.getInstance().getString(Constant.KEY_PASS_CODE)
         if (!TextUtils.isEmpty(account)) {
             etPhoneNum?.getEditText()?.setText(account)
             etPhoneNum?.setSelectionLast()
-            requestVerifyCode(account)
         }
         if (!TextUtils.isEmpty(pwd)) {
             etPhonePwd?.getEditText()?.setText(pwd)
@@ -86,7 +94,6 @@ class LoginActivity : BaseActivity() {
         if (BuildConfig.DEBUG && TextUtils.isEmpty(account) && TextUtils.isEmpty(pwd)) {
             etPhoneNum?.getEditText()?.setText("Collection2@icredit.com")
             etPhonePwd?.getEditText()?.setText("Ab!123457")
-            requestVerifyCode(account)
         }
 
         PermissionUtils.permission(Manifest.permission.READ_PHONE_STATE,
@@ -95,6 +102,7 @@ class LoginActivity : BaseActivity() {
             Manifest.permission.CALL_PHONE,
             Manifest.permission.READ_SMS).callback(object : SimpleCallback {
             override fun onGranted() {
+                requestVerifyCode()
             }
 
             override fun onDenied() {
@@ -102,6 +110,10 @@ class LoginActivity : BaseActivity() {
             }
 
         }).request()
+        ivVerify?.setOnClickListener{
+            requestVerifyCode()
+        }
+
     }
 
     private fun checkAndLogin() {
@@ -118,7 +130,11 @@ class LoginActivity : BaseActivity() {
 
         var authCode : String? = etVerify?.getText()?.replace(" ", "")
         if (TextUtils.isEmpty(authCode)) {
-            ToastUtils.showShort("need input verify .")
+            ToastUtils.showShort("Need input captcha.")
+            return
+        }
+        if (!TextUtils.equals(authCode, mCurCaptha)) {
+            ToastUtils.showShort("Captcha is not correct.")
             return
         }
         if (checkClickFast()){
@@ -140,7 +156,7 @@ class LoginActivity : BaseActivity() {
         }).request()
     }
 
-    private fun requestVerifyCode(mobile : String) {
+    private fun requestVerifyCode() {
         val jsonObject = JSONObject()
 //        "test1@icredit.com", "test2@icredit.com", "test3@icredit.com"
         // hello123
@@ -164,6 +180,7 @@ class LoginActivity : BaseActivity() {
                         etVerify?.getEditText()?.setText(captchaResponse?.captcha)
                         etVerify?.setSelectionLast()
                     }
+                    mCurCaptha = captchaResponse.captcha
                     ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Bitmap?>() {
                         override fun doInBackground(): Bitmap? {
                             return CodeUtils.getInstance().createBitmap(captchaResponse.captcha)
@@ -276,5 +293,10 @@ class LoginActivity : BaseActivity() {
             number = "2341111111111"
         }
         return number
+    }
+
+    override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
+        super.onDestroy()
     }
 }

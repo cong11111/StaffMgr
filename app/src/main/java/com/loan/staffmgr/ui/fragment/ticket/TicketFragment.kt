@@ -274,7 +274,7 @@ class TicketFragment : BaseHomeFragment() {
         if (ticketResponse.ticket != null) {
             val ticket = ticketResponse.ticket
             tvAppName?.text = ticket?.app_name
-            tvTicketId?.text = ticket?.ticket_id.toString()
+            tvTicketId?.text = ticket?.ticket_id.toString() + "    " + ticket?.case_level.toString()
             tvName?.text = ticket?.name.toString()
             tvAddrress?.text = ticket?.address.toString()
             tvOrderId?.text = ticket?.order_id.toString()

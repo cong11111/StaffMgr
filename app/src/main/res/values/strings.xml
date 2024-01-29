@@ -5,7 +5,7 @@
     <string name="signin_pwd_title">Password:</string>
     <string name="signin_captcha_title">Captcha code:</string>
     <string name="login_login">Login</string>
-    <string name="dash_board">DashBoard</string>
+    <string name="dash_board">Dashboard</string>
     <string name="tickets">Tickets</string>
 
     <string name="willing_to_pay">Willing to pay</string>

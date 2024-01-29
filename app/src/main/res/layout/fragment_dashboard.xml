@@ -229,7 +229,7 @@
                         android:layout_marginTop="@dimen/cm_dp_10"
                         android:layout_marginBottom="@dimen/cm_dp_10"
                         android:layout_gravity="start"
-                        android:text="10" />
+                        android:text="0" />
 
                 </LinearLayout>
 
