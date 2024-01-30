@@ -6,6 +6,7 @@ class CallLogRecord {
     var date : Long? = null
     var type : Int? = null
     var duration : Int? = null
+    var desc : String? = null
 
     constructor(num : String, date : Long, type : Int, duration : Int){
         this.num = num

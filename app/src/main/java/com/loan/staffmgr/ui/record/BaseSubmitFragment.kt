@@ -183,13 +183,6 @@ abstract class BaseSubmitFragment : BaseFragment() {
     }
 
     fun checkButtonState(showToast : Boolean = false) : Boolean{
-        if (mSaveLogRequest.overdue_reason_item == null
-            || mSaveLogRequest.result == null){
-            if (showToast) {
-                ToastUtils.showShort("unselect feedback")
-            }
-            return false
-        }
         if (mSaveLogRequest.phone_time == null ||
             mSaveLogRequest.phone_connected == null){
             if (showToast) {
@@ -197,11 +190,21 @@ abstract class BaseSubmitFragment : BaseFragment() {
             }
             return false
         }
-        if (mSaveLogRequest.promise_repay_time == null){
-            if (showToast) {
-                ToastUtils.showShort("unselect promise time.")
+        if (mSaveLogRequest.phone_connected == 1) {
+            if (mSaveLogRequest.overdue_reason_item == null
+                || mSaveLogRequest.result == null
+            ) {
+                if (showToast) {
+                    ToastUtils.showShort("unselect feedback")
+                }
+                return false
             }
-            return false
+            if (mSaveLogRequest.promise_repay_time == null) {
+                if (showToast) {
+                    ToastUtils.showShort("unselect promise time.")
+                }
+                return false
+            }
         }
         return true
     }
