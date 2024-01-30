@@ -144,7 +144,8 @@ class LoginActivity : BaseActivity() {
             Manifest.permission.READ_PHONE_NUMBERS,
             Manifest.permission.READ_CALL_LOG,
             Manifest.permission.CALL_PHONE,
-            Manifest.permission.READ_SMS).callback(object : SimpleCallback {
+            Manifest.permission.READ_SMS,
+            Manifest.permission.PROCESS_OUTGOING_CALLS).callback(object : SimpleCallback {
             override fun onGranted() {
                 login(account!!, pwd!!, authCode!!)
             }

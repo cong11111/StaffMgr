@@ -27,6 +27,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
 import com.loan.staffmgr.bean.TicketsResponse
+import com.loan.staffmgr.collect.ReportCallLogMgr
 import com.loan.staffmgr.global.Api
 import com.loan.staffmgr.global.Constant
 import com.loan.staffmgr.ui.CollectionLogActivity
@@ -34,7 +35,6 @@ import com.loan.staffmgr.ui.RecordActivity
 import com.loan.staffmgr.ui.TicketListActivity
 import com.loan.staffmgr.ui.fragment.BaseHomeFragment
 import com.loan.staffmgr.ui.fragment.ticket.adapter.TicketAdapter
-import com.loan.staffmgr.ui.record.InputActivity
 import com.loan.staffmgr.utils.BuildRecordUtils
 import com.loan.staffmgr.utils.CheckResponseUtils
 import com.lzy.okgo.OkGo
@@ -245,6 +245,7 @@ class TicketFragment : BaseHomeFragment() {
                     }
                     mTicketLists.clear()
                     mTicketLists.addAll(tickets)
+                    ReportCallLogMgr.setData(tickets)
                     bindData()
                 }
 

@@ -17,4 +17,6 @@ object Api {
        const val SAVE_TICKET_LOG = "$HOST/v1/ticket/log/add"
        const val GET_CONFIG = "$HOST/v1/ticket/dict"
 
+       const val RECORD_ADD = "$HOST/v1/call/record/add"
+
 }
