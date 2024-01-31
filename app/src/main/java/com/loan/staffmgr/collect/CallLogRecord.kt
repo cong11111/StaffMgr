@@ -1,4 +1,4 @@
-package com.loan.staffmgr.bean.collect
+package com.loan.staffmgr.collect
 
 class CallLogRecord {
 

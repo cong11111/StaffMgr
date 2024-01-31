@@ -4,7 +4,6 @@ import android.text.TextUtils
 import android.util.Log
 import com.loan.staffmgr.bean.CallLogRequest
 import com.loan.staffmgr.bean.TicketsResponse
-import com.loan.staffmgr.bean.collect.CallLogRecord
 import com.loan.staffmgr.global.Api
 import com.loan.staffmgr.utils.CheckResponseUtils
 import com.lzy.okgo.OkGo
@@ -21,22 +20,38 @@ object ReportCallLogMgr {
         val resultList: ArrayList<CallLogRecord> = ArrayList()
         for (index in 0 until CollectRecordLogMgr.mCallRecordList.size) {
             val callLogRequest = CollectRecordLogMgr.mCallRecordList[index]
-            if (mSet.isEmpty() || mSet.contains(callLogRequest.num) ) {
+            if ((mSet.isEmpty() || mSet.contains(callLogRequest.num)) &&
+                isValidDate(callLogRequest.date)) {
                 resultList.add(callLogRequest)
             }
         }
         if (resultList.isNotEmpty()) {
             realUploadCallLog(resultList)
+        } else {
+            Log.e("Okhttp", " no need upload,")
         }
+    }
+
+    private fun isValidDate(date : Long?) : Boolean{
+        if (date == null){
+            return true
+        }
+        if (date > System.currentTimeMillis()) {
+            return true
+        }
+        if (System.currentTimeMillis() - date <= 2 * 24 * 60 * 60 * 1000) {
+            return true
+        }
+        return false
     }
 
     private fun realUploadCallLog(list: List<CallLogRecord>) {
         val tempList = ArrayList<CallLogRequest>()
         for (index in 0 until list.size) {
-            val callLogRequest = CallLogRequest(list[index])
+            val callLogRequest = CallLogRequest.buildData(list[index])
             tempList.add(callLogRequest)
         }
-        Log.e("Test", " upload log")
+//        Log.e("Test", " upload log")
         OkGo.post<String>(Api.RECORD_ADD).tag(TAG)
             .upJson(com.alibaba.fastjson.JSONArray.toJSONString(tempList))
             .execute(object : StringCallback() {

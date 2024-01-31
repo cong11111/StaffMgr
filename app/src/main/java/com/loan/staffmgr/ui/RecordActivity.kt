@@ -118,4 +118,5 @@ class RecordActivity : BaseActivity() {
            }
        }
    }
+
 }

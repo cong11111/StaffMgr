@@ -19,4 +19,6 @@ object Api {
 
        const val RECORD_ADD = "$HOST/v1/call/record/add"
 
+       const val RECORD_LIST = "$HOST/v1/call/record/list"
+
 }

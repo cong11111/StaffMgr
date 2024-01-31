@@ -10,7 +10,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseActivity
+import com.loan.staffmgr.collect.CallLogRecord
 import com.loan.staffmgr.collect.CollectRecordLogMgr
+import com.loan.staffmgr.collect.ReportCallLogMgr
 import com.loan.staffmgr.global.App
 import com.loan.staffmgr.global.ConfigMgr
 import com.loan.staffmgr.global.Constant
@@ -18,6 +20,7 @@ import com.loan.staffmgr.ui.fragment.DashBoardFragment
 import com.loan.staffmgr.ui.fragment.ticket.TicketFragment
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.HttpHeaders
+import java.util.ArrayList
 
 class MainActivity : BaseActivity() {
 
@@ -46,16 +49,17 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initData() {
-        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<String?>() {
-            override fun doInBackground(): String? {
+        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask< ArrayList<CallLogRecord>?>() {
+            override fun doInBackground():  ArrayList<CallLogRecord>? {
                 if (App.mContext != null) {
-                    CollectRecordLogMgr.readCallRecord(App.mContext!!)
+                   return CollectRecordLogMgr.readCallRecord(App.mContext!!)
                 }
-                return ""
+                return null
             }
 
-            override fun onSuccess(result: String?) {
-
+            override fun onSuccess(result:  ArrayList<CallLogRecord>?) {
+                CollectRecordLogMgr.setData(result)
+                ReportCallLogMgr.uploadCallLog()
             }
 
         })

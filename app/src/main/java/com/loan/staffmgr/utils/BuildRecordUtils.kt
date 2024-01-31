@@ -3,13 +3,11 @@ package com.loan.staffmgr.utils
 import android.provider.CallLog
 import android.text.TextUtils
 import android.util.Pair
-import androidx.annotation.VisibleForTesting
 import com.loan.staffmgr.R
+import com.loan.staffmgr.bean.CallLogRequest
 import com.loan.staffmgr.bean.TicketsResponse
-import com.loan.staffmgr.bean.collect.CallLogRecord
 import com.loan.staffmgr.collect.CollectRecordLogMgr
 import com.loan.staffmgr.global.App
-import com.loan.staffmgr.global.AppManager
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,28 +42,28 @@ object BuildRecordUtils {
         return result
     }
 
-    fun buildCallTimeList(list : ArrayList<CallLogRecord>) : ArrayList<Pair<String, String>>{
+    fun buildCallTimeList(list : ArrayList<CallLogRequest>) : ArrayList<Pair<String, String>>{
         val result = ArrayList<Pair<String, String>>()
 
-        val callLogRecordList = ArrayList<CallLogRecord>()
+        val callLogRecordList = ArrayList<CallLogRequest>()
         callLogRecordList.addAll(list)
         for (index in 0 until callLogRecordList.size) {
             val callLogRecord = callLogRecordList[index]
-            if (callLogRecord.date != null) {
-                val dateStr = convertMillionToStr(callLogRecord.date!!)
+            if (callLogRecord.call_time != null) {
+                val dateStr = callLogRecord.call_time!!
                 val first = getRingStateStr(callLogRecord) + "  " + dateStr
-                result.add(Pair(first, callLogRecord.date!!.toString()))
+                result.add(Pair(first, callLogRecord.call_time!!.toString()))
             }
         }
         return result
     }
 
-    private fun getRingStateStr(callLogRecord : CallLogRecord) : String {
+    private fun getRingStateStr(callLogRecord : CallLogRequest) : String {
         if (App.mContext == null) {
             return " not exist"
         }
         val resources = App.mContext!!.resources
-        if (callLogRecord.duration != null && callLogRecord.duration!! > 0) {
+        if (callLogRecord.duration != null && callLogRecord.duration!!.toInt() > 0) {
             return resources.getString(R.string.take)
         } else {
             return resources.getString(R.string.ring)
@@ -104,10 +102,10 @@ object BuildRecordUtils {
         return list
     }
 
-    fun getRecordByTarget(list : ArrayList<CallLogRecord>, date : String) : CallLogRecord?{
+    fun getRecordByTarget(list : ArrayList<CallLogRequest>, date : String) : CallLogRequest?{
         for (index in 0 until list.size) {
             val callLogRecord = list[index]
-            if (TextUtils.equals(callLogRecord.date.toString(), date) ){
+            if (TextUtils.equals(callLogRecord.call_time.toString(), date) ){
                 return callLogRecord
             }
         }
@@ -134,31 +132,31 @@ object BuildRecordUtils {
 
     }
 
-    fun getRecordByTargetList(desc : String, num : String) : ArrayList<CallLogRecord>{
-        val list = ArrayList<CallLogRecord>()
-        for (index in 0 until CollectRecordLogMgr.mCallRecordList.size) {
-            val callLogRecord = CollectRecordLogMgr.mCallRecordList[index]
-            if (TextUtils.equals(callLogRecord.num, num ) &&
-                callLogRecord.type == CallLog.Calls.OUTGOING_TYPE
-//                && TextUtils.equals(callLogRecord.date.toString(), date)
-            ){
-                list.add(callLogRecord)
-            }
-        }
-        Collections.sort(list, object : Comparator<CallLogRecord> {
-            override fun compare(t1: CallLogRecord, t2: CallLogRecord): Int {
-                try {
-                    val first = t1.date
-                    val second = t2.date
-                    if (first != null && second != null) {
-                        return (first - second).toInt()
-                    }
-                    return 1
-                } catch (e: Exception) {
-                }
-                return 1
-            }
-        })
-        return list
-    }
+//    fun getRecordByTargetList(desc : String, num : String) : ArrayList<CallLogRecord>{
+//        val list = ArrayList<CallLogRecord>()
+//        for (index in 0 until CollectRecordLogMgr.mCallRecordList.size) {
+//            val callLogRecord = CollectRecordLogMgr.mCallRecordList[index]
+//            if (TextUtils.equals(callLogRecord.num, num ) &&
+//                callLogRecord.type == CallLog.Calls.OUTGOING_TYPE
+////                && TextUtils.equals(callLogRecord.date.toString(), date)
+//            ){
+//                list.add(callLogRecord)
+//            }
+//        }
+//        Collections.sort(list, object : Comparator<CallLogRecord> {
+//            override fun compare(t1: CallLogRecord, t2: CallLogRecord): Int {
+//                try {
+//                    val first = t1.date
+//                    val second = t2.date
+//                    if (first != null && second != null) {
+//                        return (first - second).toInt()
+//                    }
+//                    return 1
+//                } catch (e: Exception) {
+//                }
+//                return 1
+//            }
+//        })
+//        return list
+//    }
 }

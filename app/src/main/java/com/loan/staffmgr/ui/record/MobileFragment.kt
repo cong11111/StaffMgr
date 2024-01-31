@@ -3,19 +3,27 @@ package com.loan.staffmgr.ui.record
 import android.os.Bundle
 import android.provider.CallLog
 import android.text.TextUtils
+import android.util.Log
 import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.alibaba.fastjson.JSONArray
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
-import com.loan.staffmgr.bean.TicketsResponse
-import com.loan.staffmgr.bean.collect.CallLogRecord
+import com.loan.staffmgr.bean.CallLogRequest
 import com.loan.staffmgr.dialog.selectdata.SelectDataDialog
+import com.loan.staffmgr.global.Api
+import com.loan.staffmgr.ui.LoginActivity
 import com.loan.staffmgr.ui.RecordActivity
 import com.loan.staffmgr.utils.BuildRecordUtils
+import com.loan.staffmgr.utils.CheckResponseUtils
+import com.lzy.okgo.OkGo
+import com.lzy.okgo.callback.StringCallback
+import com.lzy.okgo.model.Response
+import org.json.JSONObject
 
 class MobileFragment : BaseSubmitFragment() {
 
@@ -27,7 +35,7 @@ class MobileFragment : BaseSubmitFragment() {
     private var flNodata : View? = null
     private var llData : View? = null
 
-    private val mCurCallTimeList = ArrayList<CallLogRecord>()
+    private val mCurCallTimeList = ArrayList<CallLogRequest>()
 
     companion object {
         const val TAG = "MobileFragment"
@@ -62,15 +70,8 @@ class MobileFragment : BaseSubmitFragment() {
                     val resultList = BuildRecordUtils.buildTargetList(contactList)
                     showListDialog(resultList, object : SelectDataDialog.Observer {
                         override fun onItemClick(content: Pair<String, String>?, pos: Int) {
-                            val list = BuildRecordUtils.getRecordByTargetList(content!!.first, content.second)
                             mContact = contactList[pos]
-                            mCurCallTimeList.clear()
-                            var target : CallLogRecord? = null
-                            if (list != null && list.isNotEmpty()) {
-                                target = list[0]
-                                mCurCallTimeList.addAll(list)
-                            }
-                            updateUiByCallLogRecord(target)
+                            getRecordList()
                         }
                     })
                 }
@@ -97,7 +98,7 @@ class MobileFragment : BaseSubmitFragment() {
         bindData()
     }
 
-    private fun updateUiByCallLogRecord(callLogRecord: CallLogRecord?) {
+    private fun updateUiByCallLogRecord(callLogRecord: CallLogRequest?) {
         tvTarget?.text = mContact?.flag + " _ "+ mContact?.relationship
         if (callLogRecord == null) {
             llData?.visibility = View.GONE
@@ -111,7 +112,8 @@ class MobileFragment : BaseSubmitFragment() {
         var hasCallLog = false
         when(callLogRecord.type) {
             (CallLog.Calls.OUTGOING_TYPE) -> {
-                if (callLogRecord.duration != null && callLogRecord.duration!! > 0) {
+                if (callLogRecord.duration != null &&
+                    callLogRecord.duration!!.toInt() > 0) {
                     resultStr = resources.getString(R.string.take)
                     duration = callLogRecord.duration.toString()
                     hasCallLog = true
@@ -138,10 +140,10 @@ class MobileFragment : BaseSubmitFragment() {
         } else {
             mSaveLogRequest.phone_connected = 1
         }
-        mSaveLogRequest.phone_time = BuildRecordUtils.convertMillionToStr(callLogRecord.date!!)
+        mSaveLogRequest.phone_time = callLogRecord.call_time
 
         tvResult?.text = resultStr
-        tvCallTime?.text = BuildRecordUtils.convertMillionToStr(callLogRecord.date!!)
+        tvCallTime?.text = callLogRecord.call_time
         tvTakeTime?.text = duration + "s"
         updateButtonState()
     }
@@ -150,5 +152,54 @@ class MobileFragment : BaseSubmitFragment() {
 
     }
 
+    fun getRecordList() {
+        if (mContact == null) {
+            return
+        }
+        val jsonObject = JSONObject()
+        jsonObject.put("mobile", mContact!!.mobile)
+        OkGo.post<String>(Api.RECORD_LIST).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()) {
+                        return
+                    }
+                    val responseStr = CheckResponseUtils.checkResponseSuccess(response)
+                    if (TextUtils.isEmpty(responseStr)) {
+                        handleError()
+                        return
+                    }
+                    val array = JSONArray.parseArray(responseStr, CallLogRequest::class.java)
+//                    val list = BuildRecordUtils.getRecordByTargetList(content!!.first, content.second)
+                    if (array == null){
+                       handleError()
+                       return
+                   }
+                    mCurCallTimeList.clear()
+                    mCurCallTimeList.addAll(array)
+                    var target : CallLogRequest? = null
+                    if (mCurCallTimeList != null && mCurCallTimeList.isNotEmpty()) {
+                        target = mCurCallTimeList[0]
+                    }
+                    updateUiByCallLogRecord(target)
+                }
 
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (isDestroy()) {
+                        return
+                    }
+                    handleError()
+                    if (BuildConfig.DEBUG) {
+                        Log.e(LoginActivity.TAG, "request login failure = " + response.body())
+                    }
+                    ToastUtils.showShort("request record list failure")
+                }
+            })
+    }
+
+    private fun handleError() {
+
+    }
 }
