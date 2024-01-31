@@ -52,9 +52,14 @@ class PhoneBroadcastReceiver : BroadcastReceiver() {
                 override fun onCallStateChanged(state: Int, phoneNumber: String?) {
                     when (state) {
                         TelephonyManager.CALL_STATE_IDLE ->
-                            Log.d("log", "挂断")
-                        TelephonyManager.CALL_STATE_OFFHOOK ->
+                            if (isOffHook) {
+                                ReportCallLogMgr.uploadCallLog()
+                                isOffHook = false
+                            }
+                        TelephonyManager.CALL_STATE_OFFHOOK -> {
                             Log.d("log", "接听")
+                            isOffHook = true
+                        }
                         TelephonyManager.CALL_STATE_RINGING -> {
                             Log.d("log", "响铃,来电号码：${phoneNumber}")
                         }

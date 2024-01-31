@@ -84,7 +84,6 @@
             <intent-filter android:priority="1">
 <!--                //主动打电话时,发送的广播-->
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
 <!--                //电话状态改变时,发送的广播 (振铃,挂断,接通)-->
                 <action android:name="android.intent.action.PHONE_STATE"/>
             </intent-filter>
