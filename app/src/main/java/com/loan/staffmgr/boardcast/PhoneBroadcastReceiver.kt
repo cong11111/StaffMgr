@@ -10,6 +10,7 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import android.util.Log
+import com.loan.staffmgr.collect.CollectRecordLogMgr
 import com.loan.staffmgr.collect.ReportCallLogMgr
 import com.loan.staffmgr.global.App
 
@@ -29,7 +30,7 @@ class PhoneBroadcastReceiver : BroadcastReceiver() {
                             TelephonyManager.CALL_STATE_IDLE -> {
                                 Log.d("pkg", "挂断")
                                 if (isOffHook) {
-                                    ReportCallLogMgr.uploadCallLog()
+                                    hookOff()
                                     isOffHook = false
                                 }
                             }
@@ -53,7 +54,7 @@ class PhoneBroadcastReceiver : BroadcastReceiver() {
                     when (state) {
                         TelephonyManager.CALL_STATE_IDLE ->
                             if (isOffHook) {
-                                ReportCallLogMgr.uploadCallLog()
+                                hookOff()
                                 isOffHook = false
                             }
                         TelephonyManager.CALL_STATE_OFFHOOK -> {
@@ -67,6 +68,11 @@ class PhoneBroadcastReceiver : BroadcastReceiver() {
                 }
             }, PhoneStateListener.LISTEN_CALL_STATE)
         }
+    }
+
+    private fun hookOff() {
+        ReportCallLogMgr.uploadCallLog()
+        CollectRecordLogMgr.readCallRecordInNewThread()
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {

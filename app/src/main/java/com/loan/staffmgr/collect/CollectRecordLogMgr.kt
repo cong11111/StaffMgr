@@ -6,7 +6,9 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.CallLog
 import android.util.Log
+import com.blankj.utilcode.util.ThreadUtils
 import com.loan.staffmgr.bean.collect.CallLogRecord
+import com.loan.staffmgr.global.App
 import java.util.ArrayList
 
 object CollectRecordLogMgr {
@@ -15,7 +17,26 @@ object CollectRecordLogMgr {
     val mCallRecordList = ArrayList<CallLogRecord>()
     var mHandler : Handler = Handler(Looper.getMainLooper())
 
-    fun readCallRecord(context: Context): ArrayList<CallLogRecord> {
+    fun readCallRecordInNewThread() {
+        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<ArrayList<CallLogRecord>?>() {
+            override fun doInBackground(): ArrayList<CallLogRecord>? {
+                if (App.mContext != null) {
+                    return readCallRecord(App.mContext!!)
+                }
+                return null
+            }
+
+            override fun onSuccess(result: ArrayList<CallLogRecord>?) {
+                if (result != null) {
+                    mCallRecordList.clear()
+                    mCallRecordList.addAll(result)
+                }
+            }
+
+        })
+    }
+
+    fun readCallRecord(context: Context, isInNewThread : Boolean = false): ArrayList<CallLogRecord> {
         val callRecordList = ArrayList<CallLogRecord>()
         val cr = context.contentResolver
         val uri = CallLog.Calls.CONTENT_URI
@@ -33,10 +54,12 @@ object CollectRecordLogMgr {
                 val duration = cursor.getInt(3)
                 callRecordList.add(CallLogRecord(number, date, type, duration))
             }
-            mHandler.post(Runnable {
-                mCallRecordList.clear()
-                mCallRecordList.addAll(callRecordList)
-            })
+            if (!isInNewThread) {
+                mHandler.post(Runnable {
+                    mCallRecordList.clear()
+                    mCallRecordList.addAll(callRecordList)
+                })
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG, "read cardCord exception = $e")
@@ -45,7 +68,5 @@ object CollectRecordLogMgr {
         }
         return callRecordList
     }
-
-
 
 }
