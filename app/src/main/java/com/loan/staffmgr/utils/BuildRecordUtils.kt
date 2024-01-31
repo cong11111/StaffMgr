@@ -3,11 +3,13 @@ package com.loan.staffmgr.utils
 import android.provider.CallLog
 import android.text.TextUtils
 import android.util.Pair
+import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
 import com.loan.staffmgr.bean.CallLogRequest
 import com.loan.staffmgr.bean.TicketsResponse
 import com.loan.staffmgr.collect.CollectRecordLogMgr
 import com.loan.staffmgr.global.App
+import com.loan.staffmgr.global.ConfigMgr
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -22,10 +24,27 @@ object BuildRecordUtils {
         for (index in 0 until contactList.size) {
             val contact = contactList[index]
             if (!TextUtils.isEmpty(contact.mobile)) {
-                result.add(Pair(contact.flag + " _ "+ contact.relationship + " _ " + contact.mobile!!, contact.mobile!!))
+                result.add(Pair(contact.relationship + " _ " + contact.mobile!!, contact.mobile!!))
             }
         }
         return result
+    }
+
+    fun getRelativeShip(flag : String?) : Int{
+        try {
+            for (index in 0 until ConfigMgr.mPhoneObject.size) {
+                val pair = ConfigMgr.mPhoneObject[index]
+                if (TextUtils.equals(pair.first, flag)) {
+                    return pair.second.toInt()
+                }
+            }
+        } catch (e : java.lang.Exception) {
+            if (BuildConfig.DEBUG) {
+                throw e
+            }
+        }
+
+        return 1
     }
 
     fun buildWhatAppList(list : ArrayList<TicketsResponse.Contact>) : ArrayList<Pair<String, String>> {
@@ -80,6 +99,14 @@ object BuildRecordUtils {
 
     fun buildFeedbackList() : ArrayList<Pair<String, String>> {
         val list = ArrayList<Pair<String, String>>()
+        if (ConfigMgr.mResult.isNotEmpty()) {
+            for (index in 0 until ConfigMgr.mResult.size) {
+                val dueResult = ConfigMgr.mResult[index]
+                list.add(Pair(dueResult.Lang, dueResult.Id.toString()))
+            }
+            return list
+        }
+
         if (App.mContext == null) {
             return list
         }
@@ -92,13 +119,13 @@ object BuildRecordUtils {
         val str6 = resources.getString(R.string.partial_pay_first)
         val str7 = resources.getString(R.string.not_pick)
 
-        list.add(Pair(str1, str1))
-        list.add(Pair(str2, str2))
-        list.add(Pair(str3, str3))
-        list.add(Pair(str4, str4))
-        list.add(Pair(str5, str5))
-        list.add(Pair(str6, str6))
-        list.add(Pair(str7, str7))
+        list.add(Pair(str1, "1"))
+        list.add(Pair(str2, "2"))
+        list.add(Pair(str3, "3"))
+        list.add(Pair(str4, "4"))
+        list.add(Pair(str5, "5"))
+        list.add(Pair(str6, "6"))
+        list.add(Pair(str7, "7"))
         return list
     }
 

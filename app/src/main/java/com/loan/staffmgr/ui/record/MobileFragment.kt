@@ -16,6 +16,7 @@ import com.loan.staffmgr.R
 import com.loan.staffmgr.bean.CallLogRequest
 import com.loan.staffmgr.dialog.selectdata.SelectDataDialog
 import com.loan.staffmgr.global.Api
+import com.loan.staffmgr.global.ConfigMgr
 import com.loan.staffmgr.ui.LoginActivity
 import com.loan.staffmgr.ui.RecordActivity
 import com.loan.staffmgr.utils.BuildRecordUtils
@@ -34,6 +35,7 @@ class MobileFragment : BaseSubmitFragment() {
 
     private var flNodata : View? = null
     private var llData : View? = null
+    private var flLoading : View? = null
 
     private val mCurCallTimeList = ArrayList<CallLogRequest>()
 
@@ -61,6 +63,7 @@ class MobileFragment : BaseSubmitFragment() {
 
         flNodata = view.findViewById<View>(R.id.fl_record_nodata)
         llData = view.findViewById<View>(R.id.ll_record_data)
+        flLoading = view.findViewById<View>(R.id.fl_loading)
 
         llTarget?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -71,6 +74,8 @@ class MobileFragment : BaseSubmitFragment() {
                     showListDialog(resultList, object : SelectDataDialog.Observer {
                         override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                             mContact = contactList[pos]
+                            mSaveLogRequest.phone_objects = BuildRecordUtils.getRelativeShip(mContact?.flag)
+                            mSaveLogRequest.phone_object_mobile = mContact?.mobile
                             getRecordList()
                         }
                     })
@@ -127,11 +132,9 @@ class MobileFragment : BaseSubmitFragment() {
                 duration = resources.getString(R.string.no_take_record)
             }
         }
-
-        llPromiseTime?.isSelected = hasCallLog
-        llPromiseTime?.isEnabled = hasCallLog
         llFeedBack?.isSelected = hasCallLog
         llFeedBack?.isEnabled = hasCallLog
+
         if (!hasCallLog) {
             tvFeedBack?.text = resources.getString(R.string.click_to_select)
             tvPromiseTime?.text = resources.getString(R.string.select_time)
@@ -152,10 +155,11 @@ class MobileFragment : BaseSubmitFragment() {
 
     }
 
-    fun getRecordList() {
+   private fun getRecordList() {
         if (mContact == null) {
             return
         }
+        flLoading?.visibility = View.VISIBLE
         val jsonObject = JSONObject()
         jsonObject.put("mobile", mContact!!.mobile)
         OkGo.post<String>(Api.RECORD_LIST).tag(TAG)
@@ -165,6 +169,7 @@ class MobileFragment : BaseSubmitFragment() {
                     if (isDestroy()) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     val responseStr = CheckResponseUtils.checkResponseSuccess(response)
                     if (TextUtils.isEmpty(responseStr)) {
                         handleError()
@@ -190,6 +195,7 @@ class MobileFragment : BaseSubmitFragment() {
                     if (isDestroy()) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     handleError()
                     if (BuildConfig.DEBUG) {
                         Log.e(LoginActivity.TAG, "request login failure = " + response.body())

@@ -60,7 +60,6 @@ class CheckResponseUtils {
                 return null
             }
             if (responseBean.getData() == null) {
-                ToastUtils.showShort("request failure 2.")
                 return null
             }
             return JSONObject.toJSONString(responseBean.getData())

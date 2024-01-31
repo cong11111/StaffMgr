@@ -24,6 +24,7 @@ import com.loan.staffmgr.bean.SaveLogRequest
 import com.loan.staffmgr.bean.TicketsResponse
 import com.loan.staffmgr.dialog.selectdata.SelectDataDialog
 import com.loan.staffmgr.global.Api
+import com.loan.staffmgr.global.ConfigMgr
 import com.loan.staffmgr.ui.RecordActivity
 import com.loan.staffmgr.utils.BuildRecordUtils
 import com.lzy.okgo.OkGo
@@ -85,10 +86,14 @@ abstract class BaseSubmitFragment : BaseFragment() {
                 showListDialog(resultList, object : SelectDataDialog.Observer {
                     override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                         val dataStr = content?.first.toString()
+                        if (TextUtils.equals(dataStr, "Willing to pay")) {
+                            mSaveLogRequest.repay_inclination = 1
+                        } else {
+                            mSaveLogRequest.repay_inclination = 2
+                        }
                         tvFeedBack?.text = dataStr
-                        // TODO
                         mSaveLogRequest.result = dataStr
-                        mSaveLogRequest.overdue_reason_item = pos
+//                        mSaveLogRequest.overdue_reason_item = pos
                         updateButtonState()
                     }
                 })
@@ -153,6 +158,7 @@ abstract class BaseSubmitFragment : BaseFragment() {
         jsonObject.put( "repay_inclination", saveLogRequest.repay_inclination)
         jsonObject.put( "promise_repay_time", saveLogRequest.promise_repay_time)
         jsonObject.put( "overdue_reason_item", saveLogRequest.overdue_reason_item)
+        jsonObject.put( "phone_object_mobile", saveLogRequest.phone_object_mobile)
 
         OkGo.post<String>(Api.SAVE_TICKET_LOG).tag(RecordActivity.TAG)
             .upJson(jsonObject)
@@ -178,6 +184,15 @@ abstract class BaseSubmitFragment : BaseFragment() {
     }
 
     fun updateButtonState(showToast : Boolean = false) {
+        if (mSaveLogRequest.repay_inclination == 1) {
+            llPromiseTime?.visibility = View.VISIBLE
+            llPromiseTime?.isSelected = true
+            llPromiseTime?.isEnabled = true
+        } else {
+            llPromiseTime?.visibility = View.GONE
+            llPromiseTime?.isSelected = false
+            llPromiseTime?.isEnabled = false
+        }
         val isSelect = checkButtonState(showToast)
         flSubmit?.isEnabled = isSelect
     }

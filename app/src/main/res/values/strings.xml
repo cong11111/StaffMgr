@@ -31,6 +31,7 @@
     <string name="mobile">Mobile</string>
     <string name="whats_app">WhatsApp</string>
     <string name="submit">Submit</string>
+    <string name="submit_note">Submit Note</string>
     <string name="no_take_record">No take record</string>
     <string name="click_to_select">Click to select:</string>
     <string name="select_time">Select time:</string>

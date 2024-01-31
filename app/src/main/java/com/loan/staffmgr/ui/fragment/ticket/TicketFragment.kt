@@ -281,8 +281,8 @@ class TicketFragment : BaseHomeFragment() {
             return
         }
 
-        // TODO测试逻辑
-        if (BuildConfig.DEBUG && ticketResponse.contacts != null) {
+        // TODO 测试逻辑
+        if (BuildConfig.DEBUG && Constant.IS_LOCAL_TEST_DATA && ticketResponse.contacts != null) {
             for (index in 0 until ticketResponse.contacts!!.size) {
                 val temp = ticketResponse.contacts!![index]
                 if (index == 0) {

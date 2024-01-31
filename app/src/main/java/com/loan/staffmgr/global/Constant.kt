@@ -18,6 +18,8 @@ object Constant {
     var mName : String? = null
     var mDashBoard : DashboardResponse? = null
 
+    var IS_LOCAL_TEST_DATA : Boolean = true
+
     var mTicketLists : ArrayList<TicketsResponse> = ArrayList()
 
     // TicketStatusCreated          TicketStatusEnum = 0
