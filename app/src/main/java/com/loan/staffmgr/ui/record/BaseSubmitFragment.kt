@@ -198,23 +198,33 @@ abstract class BaseSubmitFragment : BaseFragment() {
     }
 
     fun checkButtonState(showToast : Boolean = false) : Boolean{
-        if (mSaveLogRequest.phone_time == null ||
-            mSaveLogRequest.phone_connected == null){
+        if (mSaveLogRequest.phone_time == null) {
             if (showToast) {
-                ToastUtils.showShort("unselect contact record.")
+                if (mSaveLogRequest.communication_way == 2) {
+                    ToastUtils.showShort("unselect phone time.")
+                } else {
+                    ToastUtils.showShort("unselect contact record.")
+                }
             }
             return false
         }
+        if (mSaveLogRequest.communication_way == 2) {
+            if (mSaveLogRequest.phone_connected == null) {
+                if (showToast) {
+                    ToastUtils.showShort("unselect contact record.")
+                }
+                return false
+            }
+        }
         if (mSaveLogRequest.phone_connected == 1) {
-            if (mSaveLogRequest.overdue_reason_item == null
-                || mSaveLogRequest.result == null
+            if (mSaveLogRequest.result == null
             ) {
                 if (showToast) {
                     ToastUtils.showShort("unselect feedback")
                 }
                 return false
             }
-            if (mSaveLogRequest.promise_repay_time == null) {
+            if (mSaveLogRequest.repay_inclination == 1 && mSaveLogRequest.promise_repay_time == null) {
                 if (showToast) {
                     ToastUtils.showShort("unselect promise time.")
                 }

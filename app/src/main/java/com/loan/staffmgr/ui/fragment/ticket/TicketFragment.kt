@@ -143,6 +143,18 @@ class TicketFragment : BaseHomeFragment() {
         flRecord?.setOnClickListener(object : OnClickListener {
             override fun onClick(v: View?) {
                 val ticketResponse = getTicketResponse()
+                if (ticketResponse == null ){
+                    ToastUtils.showShort("Collect Data is not exist.")
+                    return
+                }
+                if (mContactLists == null || mContactLists.size == 0 ){
+                    ToastUtils.showShort("Collect contact data not exist.")
+                    return
+                }
+                if (ticketResponse.ticket == null ){
+                    ToastUtils.showShort("Ticket data not exist.")
+                    return
+                }
                 RecordActivity.showMe(context!!, mContactLists, ticketResponse?.ticket)
             }
 
