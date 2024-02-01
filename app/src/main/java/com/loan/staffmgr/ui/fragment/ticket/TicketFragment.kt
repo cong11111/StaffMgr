@@ -336,7 +336,7 @@ class TicketFragment : BaseHomeFragment() {
             return
         }
         tvMyPhoneNum?.text = firstItem.mobile
-        setCallCountByPhoneNum(firstItem.mobile!!, tvMyCallCount)
+        setCallCountByPhoneNum(firstItem, tvMyCallCount)
         tvPhoneNumCopy?.setOnClickListener(object : OnClickListener {
             override fun onClick(v: View?) {
                 copyTextToClipBoard(firstItem.mobile)
@@ -351,23 +351,27 @@ class TicketFragment : BaseHomeFragment() {
         })
     }
 
-    fun setCallCountByPhoneNum(mobile : String , tv : TextView?) {
-        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Pair<Int, Int>?>() {
-            override fun doInBackground(): Pair<Int, Int>? {
-
-                return BuildRecordUtils.getCallCount(mobile)
-            }
-
-            override fun onSuccess(result: Pair<Int, Int>?) {
-                if (result == null){
-                    return
-                }
-                val hasCalledCount = result.first
-                val totalCount = result.second
-                tv?.text = "$hasCalledCount takes / $totalCount times"
-            }
-
-        })
+    fun setCallCountByPhoneNum(contact : TicketsResponse.Contact? , tv : TextView?) {
+        if (contact == null) {
+            return
+        }
+        tv?.text = "${contact.take} takes / ${contact.collect_count} times"
+//        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Pair<Int, Int>?>() {
+//            override fun doInBackground(): Pair<Int, Int>? {
+//
+//                return BuildRecordUtils.getCallCount(mobile)
+//            }
+//
+//            override fun onSuccess(result: Pair<Int, Int>?) {
+//                if (result == null){
+//                    return
+//                }
+//                val hasCalledCount = result.first
+//                val totalCount = result.second
+//                tv?.text = "$hasCalledCount takes / $totalCount times"
+//            }
+//
+//        })
     }
 
     private fun handleError() {

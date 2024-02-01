@@ -34,7 +34,7 @@ class TicketAdapter(val contactLists: ArrayList<TicketsResponse.Contact>, val fr
         holder.tvRelationShip?.text =  contact?.relationship.toString()
         holder.tvName?.text = contact?.flag.toString()
         if (!TextUtils.isEmpty(contact.mobile)) {
-            fragment?.setCallCountByPhoneNum(contact.mobile!!, holder.tvCount)
+            fragment?.setCallCountByPhoneNum(contact, holder.tvCount)
         }
     }
 }

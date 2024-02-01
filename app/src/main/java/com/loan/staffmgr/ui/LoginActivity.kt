@@ -33,6 +33,8 @@ import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import org.json.JSONObject
+import java.util.Random
+
 
 class LoginActivity : BaseActivity() {
 
@@ -49,7 +51,7 @@ class LoginActivity : BaseActivity() {
     private var flCommit : FrameLayout? = null
     private var ivShowPwd : AppCompatImageView? = null
 
-    private var mCurCaptha : String? = null
+    private var mCurCaptcha : String? = null
     private var passwordMode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,8 +94,8 @@ class LoginActivity : BaseActivity() {
             etPhonePwd?.setSelectionLast()
         }
         if (BuildConfig.DEBUG && TextUtils.isEmpty(account) && TextUtils.isEmpty(pwd)) {
-            etPhoneNum?.getEditText()?.setText("Collection2@icredit.com")
-            etPhonePwd?.getEditText()?.setText("Ab!123457")
+            etPhoneNum?.getEditText()?.setText("Collection4@icredit.com")
+            etPhonePwd?.getEditText()?.setText("Ab!123463")
         }
 
         PermissionUtils.permission(Manifest.permission.READ_PHONE_STATE,
@@ -103,7 +105,7 @@ class LoginActivity : BaseActivity() {
             Manifest.permission.READ_SMS,
             Manifest.permission.PROCESS_OUTGOING_CALLS).callback(object : SimpleCallback {
             override fun onGranted() {
-                requestVerifyCode()
+
             }
 
             override fun onDenied() {
@@ -112,9 +114,9 @@ class LoginActivity : BaseActivity() {
 
         }).request()
         ivVerify?.setOnClickListener{
-            requestVerifyCode()
+            generateRandomNum()
         }
-
+        generateRandomNum()
     }
 
     private fun checkAndLogin() {
@@ -134,7 +136,7 @@ class LoginActivity : BaseActivity() {
             ToastUtils.showShort("Need input captcha.")
             return
         }
-        if (!TextUtils.equals(authCode, mCurCaptha)) {
+        if (!TextUtils.equals(authCode, mCurCaptcha)) {
             ToastUtils.showShort("Captcha is not correct.")
             return
         }
@@ -158,75 +160,81 @@ class LoginActivity : BaseActivity() {
         }).request()
     }
 
-    private fun requestVerifyCode() {
-        val jsonObject = JSONObject()
-//        "test1@icredit.com", "test2@icredit.com", "test3@icredit.com"
-        // hello123
-        jsonObject.put("mobile", getPhoneNum())
-        OkGo.getInstance().cancelTag(TAG)
-        OkGo.post<String>(Api.SEND_SMS).tag(TAG)
-            .upJson(jsonObject)
-            .execute(object : StringCallback() {
-                override fun onSuccess(response: Response<String>) {
-                    if (isDestroy()) {
-                        return
-                    }
-//                    flLoading?.visibility = View.GONE
-                    val captchaResponse: CaptchaResponse? =
-                        checkResponseSuccess(response, CaptchaResponse::class.java)
-                    if (captchaResponse == null) {
-                        Log.e(TAG, " request verify error ." + response.body())
-                        return
-                    }
-                    if (BuildConfig.DEBUG && !TextUtils.isEmpty(captchaResponse?.captcha)) {
-                        etVerify?.getEditText()?.setText(captchaResponse?.captcha)
-                        etVerify?.setSelectionLast()
-                    }
-                    mCurCaptha = captchaResponse.captcha
-                    ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Bitmap?>() {
-                        override fun doInBackground(): Bitmap? {
-                            return CodeUtils.getInstance().createBitmap(captchaResponse.captcha)
-                        }
+    private fun generateRandomNum() {
+        mCurCaptcha = getRandomNum()
+        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Bitmap?>() {
+            override fun doInBackground(): Bitmap? {
+                return CodeUtils.getInstance().createBitmap(mCurCaptcha)
+            }
 
-                        override fun onSuccess(result: Bitmap?) {
-                            if (result == null || result.isRecycled) {
-                                return
-                            }
-                            ivVerify?.setImageBitmap(result)
-                        }
-
-                    })
+            override fun onSuccess(result: Bitmap?) {
+                if (result == null || result.isRecycled) {
+                    return
                 }
-
-                override fun onError(response: Response<String>) {
-                    super.onError(response)
-                    if (isDestroy()) {
-                        return
-                    }
-//                    flLoading?.visibility = View.GONE
-                    if (isFinishing|| isDestroyed) {
-                        return
-                    }
-                    if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "request verify failure = " + response.body())
-                    }
-                    ToastUtils.showShort("request verify  failure")
+                if (BuildConfig.DEBUG && !TextUtils.isEmpty(mCurCaptcha)) {
+                    etVerify?.getEditText()?.setText(mCurCaptcha)
+                    etVerify?.setSelectionLast()
                 }
-            })
+                ivVerify?.setImageBitmap(result)
+            }
+
+        })
     }
+
+//    private fun requestVerifyCode() {
+//        val jsonObject = JSONObject()
+////        "test1@icredit.com", "test2@icredit.com", "test3@icredit.com"
+//        // hello123
+//        jsonObject.put("mobile", getPhoneNum())
+//        OkGo.getInstance().cancelTag(TAG)
+//        OkGo.post<String>(Api.SEND_SMS).tag(TAG)
+//            .upJson(jsonObject)
+//            .execute(object : StringCallback() {
+//                override fun onSuccess(response: Response<String>) {
+//                    if (isDestroy()) {
+//                        return
+//                    }
+////                    flLoading?.visibility = View.GONE
+//                    val captchaResponse: CaptchaResponse? =
+//                        checkResponseSuccess(response, CaptchaResponse::class.java)
+//                    if (captchaResponse == null) {
+//                        Log.e(TAG, " request verify error ." + response.body())
+//                        return
+//                    }
+//
+//                    mCurCaptha = captchaResponse.captcha
+//
+//                }
+//
+//                override fun onError(response: Response<String>) {
+//                    super.onError(response)
+//                    if (isDestroy()) {
+//                        return
+//                    }
+////                    flLoading?.visibility = View.GONE
+//                    if (isFinishing|| isDestroyed) {
+//                        return
+//                    }
+//                    if (BuildConfig.DEBUG) {
+//                        Log.e(TAG, "request verify failure = " + response.body())
+//                    }
+//                    ToastUtils.showShort("request verify  failure")
+//                }
+//            })
+//    }
 
     @SuppressLint("MissingPermission")
     private fun login(account : String, pwd : String, captcha : String){
         val jsonObject = JSONObject()
-        var phoneNumber : String? = getPhoneNum()
-        if (TextUtils.isEmpty(phoneNumber)){
-            ToastUtils.showShort("Can not read sim")
-            return
-        }
+//        var phoneNumber : String? = getPhoneNum()
+//        if (TextUtils.isEmpty(phoneNumber)){
+//            ToastUtils.showShort("Can not read sim")
+//            return
+//        }
 //        Log.e("Test", " mobile =  $phoneNumber")
         jsonObject.put("account", account)
         jsonObject.put("password", pwd)
-        jsonObject.put("mobile", phoneNumber)
+//        jsonObject.put("mobile", phoneNumber)
         jsonObject.put("captcha", captcha)
         jsonObject.put("appVersionCode", AppUtils.getAppVersionCode())
         OkGo.post<String>(Api.LOGIN).tag(TAG)
@@ -280,25 +288,41 @@ class LoginActivity : BaseActivity() {
         MainActivity.start(this)
     }
 
-    @SuppressLint("MissingPermission")
-    private fun getPhoneNum(): String? {
-        var number : String
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val manager = this.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
-            number = manager.getPhoneNumber(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID)
-        } else {
-            val telephonyManager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            number =  telephonyManager.getLine1Number()
-        }
-        // TODO
-        if (number.startsWith("+86")){
-            number = "2341111111111"
-        }
-        return number
-    }
+//    @SuppressLint("MissingPermission")
+//    private fun getPhoneNum(): String? {
+//        var number : String
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            val manager = this.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
+//            number = manager.getPhoneNumber(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID)
+//        } else {
+//            val telephonyManager = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+//            number =  telephonyManager.getLine1Number()
+//        }
+////        val subscriptionManager = SubscriptionManager.from(applicationContext)
+////        val subsInfoList = subscriptionManager.activeSubscriptionInfoList
+////
+////        Log.d("Test", "Current list =$subsInfoList")
+////
+////        for (subscriptionInfo in subsInfoList) {
+////            val number = subscriptionInfo.number
+////            Log.d("Test", " Number is $number")
+////        }
+//        // TODO
+//        if (number.startsWith("+86")){
+//            number = "2341111111111"
+//        }
+//        return number
+//    }
 
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
         super.onDestroy()
+    }
+
+    private fun getRandomNum() : String {
+        val random = Random()
+        // 生成 0~999999 之间的随机整数
+        val randomNum = random.nextInt(89999) + 10000
+        return randomNum.toString()
     }
 }
