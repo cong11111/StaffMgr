@@ -7,7 +7,7 @@ class CallLogRequest {
 
     var mobile : String? = null
     var call_time : String? = null
-    var duration : String? = null
+    var duration : Int? = null
     var type : Int? = null
     var desc : String? = null
 
@@ -19,7 +19,7 @@ class CallLogRequest {
                 callLogRequest.call_time = BuildRecordUtils.convertMillionToStr(callLog.date!!)
             }
             if (callLog.duration != null) {
-                callLogRequest.duration = callLog.duration!!.toString()
+                callLogRequest.duration = callLog.duration!!
             }
             if (callLog.type != null) {
                 callLogRequest.type = callLog.type!!

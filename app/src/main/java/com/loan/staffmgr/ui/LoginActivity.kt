@@ -322,7 +322,7 @@ class LoginActivity : BaseActivity() {
     private fun getRandomNum() : String {
         val random = Random()
         // 生成 0~999999 之间的随机整数
-        val randomNum = random.nextInt(89999) + 10000
+        val randomNum = random.nextInt(8999) + 1000
         return randomNum.toString()
     }
 }

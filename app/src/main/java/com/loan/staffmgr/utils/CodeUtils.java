@@ -40,9 +40,9 @@ public class CodeUtils {
     //默认线条的条数
     private static final int DEFAULT_LINE_NUMBER = 5;
     //padding值
-    private static final int BASE_PADDING_LEFT = 10, RANGE_PADDING_LEFT = 15, BASE_PADDING_TOP = 15, RANGE_PADDING_TOP = 20;
+    private static final int BASE_PADDING_LEFT = 15, RANGE_PADDING_LEFT = 15, BASE_PADDING_TOP = 15, RANGE_PADDING_TOP = 20;
     //验证码的默认宽高
-    private static final int DEFAULT_WIDTH = 130, DEFAULT_HEIGHT = 50;
+    private static final int DEFAULT_WIDTH = 140, DEFAULT_HEIGHT = 50;
     //settings decided by the layout xml
     //canvas width and height
     private int width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT;
@@ -71,9 +71,9 @@ public class CodeUtils {
             c.drawText(code.charAt(i) + "", padding_left, padding_top, paint);
         }
         //画线条
-        for (int i = 0; i < line_number; i++) {
-            drawLine(c, paint);
-        }
+//        for (int i = 0; i < line_number; i++) {
+//            drawLine(c, paint);
+//        }
 //        c.save( Canvas.ALL_SAVE_FLAG );//保存
         c.save();//保存
         c.restore();//

@@ -82,7 +82,7 @@ object BuildRecordUtils {
             return " not exist"
         }
         val resources = App.mContext!!.resources
-        if (callLogRecord.duration != null && callLogRecord.duration!!.toInt() > 0) {
+        if (callLogRecord.duration != null && callLogRecord.duration!! > 0) {
             return resources.getString(R.string.take)
         } else {
             return resources.getString(R.string.ring)

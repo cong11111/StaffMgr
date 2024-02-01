@@ -118,7 +118,7 @@ class MobileFragment : BaseSubmitFragment() {
         when(callLogRecord.type) {
             (CallLog.Calls.OUTGOING_TYPE) -> {
                 if (callLogRecord.duration != null &&
-                    callLogRecord.duration!!.toInt() > 0) {
+                    callLogRecord.duration!! > 0) {
                     resultStr = resources.getString(R.string.take)
                     duration = callLogRecord.duration.toString()
                     hasCallLog = true
