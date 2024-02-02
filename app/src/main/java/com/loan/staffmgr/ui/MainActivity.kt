@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ThreadUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,11 +20,16 @@ import com.loan.staffmgr.global.ConfigMgr
 import com.loan.staffmgr.global.Constant
 import com.loan.staffmgr.ui.fragment.DashBoardFragment
 import com.loan.staffmgr.ui.fragment.ticket.TicketFragment
+import com.loan.staffmgr.ui.setting.SettingFragment
+import com.loan.staffmgr.utils.log.LogSaver
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.HttpHeaders
 import java.util.ArrayList
 
 class MainActivity : BaseActivity() {
+
+    private var drawerLayout: DrawerLayout? = null
+    private var settingFragment: SettingFragment? = null
 
     companion object {
         const val TAG = "MainActivity"
@@ -66,6 +73,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initView() {
+        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout_container)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         bottomNavigationView.setOnItemSelectedListener(object : NavigationBarView.OnItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -82,6 +90,9 @@ class MainActivity : BaseActivity() {
 
         })
         ConfigMgr.requestConfig()
+        LogSaver.logToFile("main activity")
+        settingFragment = SettingFragment()
+        replaceFragment(settingFragment!!, R.id.fl_main_setting)
     }
 
     private fun switchFragment(index : Int) {
@@ -100,4 +111,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    fun closeSlide() {
+        drawerLayout?.closeDrawer(GravityCompat.START)
+    }
 }

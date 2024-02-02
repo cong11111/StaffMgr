@@ -1,35 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:background="#F5F5F5"
     tools:context=".ui.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout_container"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp" />
+        android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:background="#F5F5F5">
 
-       <com.google.android.material.bottomnavigation.BottomNavigationView
-           android:id="@+id/bottom_navigation_view"
-           android:layout_width="match_parent"
-           android:background="@color/white"
-           app:menu="@menu/menu_bottom_navigation"
-           app:labelVisibilityMode="labeled"
-           app:itemTextColor="@drawable/selector_main_bottom_navigation"
-           app:itemIconTint="@drawable/selector_main_bottom_navigation"
-           android:layout_height="match_parent"/>
-<!--        -->
-<!--        app:itemTextColor="@drawable/colortext-->
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp">
 
-</LinearLayout>
+                <FrameLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_main_menu"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_main_menu" />
+
+
+            </FrameLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottom_navigation_view"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    app:menu="@menu/menu_bottom_navigation"
+                    app:labelVisibilityMode="labeled"
+                    app:itemTextColor="@drawable/selector_main_bottom_navigation"
+                    app:itemIconTint="@drawable/selector_main_bottom_navigation"
+                    android:layout_height="match_parent"/>
+                <!--        -->
+                <!--        app:itemTextColor="@drawable/colortext-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_main_setting"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/white">
+
+        </FrameLayout>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+</FrameLayout>

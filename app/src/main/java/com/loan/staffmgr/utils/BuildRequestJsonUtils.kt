@@ -17,6 +17,12 @@ object BuildRequestJsonUtils {
         return httpHeaders
     }
 
+    fun clearHeaderToken(): HttpHeaders{
+        val httpHeaders = HttpHeaders()
+        httpHeaders.put("token", "")
+        return httpHeaders
+    }
+
 //        fun buildHeadersNonLogin(): HttpHeaders {
 //            val httpHeaders = HttpHeaders()
 //            try {

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Collections</string>
+    <string name="welcome_to_collections">Welcome to Collections</string>
+
     <string name="signin_captcha">send sms</string>
     <string name="signin_account_title">Account:</string>
     <string name="signin_pwd_title">Password:</string>
@@ -45,4 +47,6 @@
     <string name="progressing">Progressing</string>
     <string name="detail">Detail</string>
 
+    <string name="setting_feed_back">Feedback</string>
+    <string name="setting_logout">Logout</string>
 </resources>
