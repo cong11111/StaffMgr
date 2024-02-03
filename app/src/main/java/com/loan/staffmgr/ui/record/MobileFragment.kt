@@ -139,9 +139,9 @@ class MobileFragment : BaseSubmitFragment() {
             tvFeedBack?.text = resources.getString(R.string.click_to_select)
             tvPromiseTime?.text = resources.getString(R.string.select_time)
             tvNote?.text = ""
-            mSaveLogRequest.phone_connected = 0
+            mSaveLogRequest.phone_connected = ConfigMgr.getPhoneConnect(false).toInt()
         } else {
-            mSaveLogRequest.phone_connected = 1
+            mSaveLogRequest.phone_connected = ConfigMgr.getPhoneConnect(true).toInt()
         }
         mSaveLogRequest.phone_time = callLogRecord.call_time
 

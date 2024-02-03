@@ -37,9 +37,9 @@ class CollectionLogAdapter(val mList: ArrayList<CollectionLogResponse>) : Recycl
             holder.tvDesc2?.text = BuildRecordUtils.convertMillionToStr(collectionLog.Ctime!!)
         }
         if (collectionLog.PhoneConnect == 0) {
-            holder.tvDesc3?.text = holder.itemView.context.getString(R.string.take)
-        } else {
             holder.tvDesc3?.text = holder.itemView.context.getString(R.string.ring)
+        } else {
+            holder.tvDesc3?.text =  holder.itemView.context.getString(R.string.take)
         }
 
         holder.tvDesc4?.text = collectionLog?.Result

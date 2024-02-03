@@ -77,7 +77,9 @@ class TicketListAdapter(val list : ArrayList<TicketsResponse>) :  RecyclerView.A
         } else {
             holder.tv3?.text = ticket.due_date.toString()
         }
-
+        val isComplete = (ticket.status == 5 || ticket.status == 6)
+        holder.tv4?.isEnabled = !isComplete
+        holder.tv4?.isSelected = !isComplete
         holder.tv4?.setOnClickListener(object : OnClickListener {
             override fun onClick(v: View?) {
                 mListener?.click(position)

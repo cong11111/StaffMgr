@@ -13,12 +13,8 @@ import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.PermissionUtils.SimpleCallback
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ThreadUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseActivity
@@ -56,6 +52,8 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.bg_color))
+        BarUtils.setStatusBarLightMode(this, true)
         setContentView(R.layout.activity_login)
         ivVerify = findViewById<AppCompatImageView>(R.id.iv_signin_verify)
         flLoading = findViewById<View>(R.id.fl_siginin_loading)

@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.View.OnClickListener
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.BarUtils
 import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseActivity
 import com.loan.staffmgr.bean.TicketsResponse
@@ -36,6 +38,8 @@ class TicketListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.bg_color))
+        BarUtils.setStatusBarLightMode(this, true)
         setContentView(R.layout.activity_ticket_list)
         initView()
     }
@@ -78,6 +82,10 @@ class TicketListActivity : BaseActivity() {
             }
 
         })
+
+        ivBack?.setOnClickListener {
+            finish()
+        }
         mAdapter = TicketListAdapter(mShowTicketLists)
         rvContent?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvContent?.adapter = mAdapter

@@ -41,6 +41,8 @@
         android:layout_marginStart="@dimen/cm_dp_10"
         android:layout_marginEnd="@dimen/cm_dp_20"
         android:layout_gravity="center_vertical"
-        style="@style/tv_copy_style" />
+        style="@style/tv_copy_style"
+        android:background="@drawable/selector_radius_detail_15"
+        />
 
 </LinearLayout>

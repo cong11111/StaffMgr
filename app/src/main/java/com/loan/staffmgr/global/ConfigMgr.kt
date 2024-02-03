@@ -129,4 +129,24 @@ object ConfigMgr {
      * "communicationWay":{"1":"Whatsapp","2":"Phone","3":"SMS"},
      * "phoneConnect":{"0":"Unconnected","1":"Connected","2":"SMS Sent"}}
      */
+
+    fun getPhoneConnect(isPhoneConnected : Boolean) : String {
+        var unconnectedInt = "0"
+        var connectedInt = "1"
+        for (index in 0 until mPhoneConnect.size) {
+            val pair = mPhoneConnect[index]
+            if (!TextUtils.isEmpty(pair.first)) {
+                if (TextUtils.equals(pair.first, "Unconnected")) {
+                    unconnectedInt = pair.second
+                } else if (TextUtils.equals(pair.first, "Connected")) {
+                    connectedInt = pair.second
+                }
+            }
+        }
+        if (isPhoneConnected) {
+            return connectedInt
+        } else {
+            return unconnectedInt
+        }
+    }
 }
