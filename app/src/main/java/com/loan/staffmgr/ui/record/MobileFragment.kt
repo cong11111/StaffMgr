@@ -30,7 +30,9 @@ class MobileFragment : BaseSubmitFragment() {
 
     private var tvTakeTime : TextView? = null
     private var llCallTime : View? = null
-    private var tvResult : TextView? = null
+    private var tvResultHasCall : TextView? = null
+    private var tvResultNotCall : TextView? = null
+    private var llResultNotCall : View? = null
     private var tvCallTime : TextView? = null
 
     private var flNodata : View? = null
@@ -57,7 +59,10 @@ class MobileFragment : BaseSubmitFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         tvTakeTime = view.findViewById<TextView>(R.id.tv_record_take_time)
-        tvResult = view.findViewById<TextView>(R.id.tv_record_result)
+        tvResultHasCall = view.findViewById<TextView>(R.id.tv_record_result_hascall)
+        llResultNotCall = view.findViewById<TextView>(R.id.ll_record_not_calllog)
+        tvResultNotCall = view.findViewById<TextView>(R.id.tv_record_not_calllog)
+
         llCallTime = view.findViewById<View>(R.id.ll_call_time_container)
         tvCallTime = view.findViewById<TextView>(R.id.tv_record_call_time)
 
@@ -76,6 +81,12 @@ class MobileFragment : BaseSubmitFragment() {
                             mContact = contactList[pos]
                             mSaveLogRequest.phone_objects = BuildRecordUtils.getRelativeShip(mContact?.flag)
                             mSaveLogRequest.phone_object_mobile = mContact?.mobile
+                            clearCallTime()
+                            clearPhoneConnectResult()
+                            clearTakeTime()
+                            clearFeedBack()
+                            clearPromiseTime()
+                            updateButtonState()
                             getRecordList()
                         }
                     })
@@ -94,6 +105,10 @@ class MobileFragment : BaseSubmitFragment() {
                     override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                         if (content != null && !TextUtils.isEmpty(content.second)) {
                             val target = BuildRecordUtils.getRecordByTarget(mCurCallTimeList, content.second)
+                            clearPhoneConnectResult()
+                            clearTakeTime()
+                            clearFeedBack()
+                            clearPromiseTime()
                             updateUiByCallLogRecord(target)
                         }
                     }
@@ -139,13 +154,30 @@ class MobileFragment : BaseSubmitFragment() {
             tvFeedBack?.text = resources.getString(R.string.click_to_select)
             tvPromiseTime?.text = resources.getString(R.string.select_time)
             tvNote?.text = ""
-            mSaveLogRequest.phone_connected = ConfigMgr.getPhoneConnect(false).toInt()
+            tvResultHasCall?.visibility = View.GONE
+            llResultNotCall?.visibility = View.VISIBLE
+            llResultNotCall?.setOnClickListener {
+                showListDialog( BuildRecordUtils.buildCallResultList(), object : SelectDataDialog.Observer {
+                    override fun onItemClick(content: Pair<String, String>?, pos: Int) {
+                        // TODO
+                        tvResultNotCall?.text = content?.first
+                        mSaveLogRequest.phone_connected = ConfigMgr.getPhoneConnect(false,content?.first).toInt()
+                        clearFeedBack()
+                        clearPromiseTime()
+                        updateButtonState()
+                    }
+
+                })
+            }
+
         } else {
+            tvResultHasCall?.visibility = View.VISIBLE
+            llResultNotCall?.visibility = View.GONE
+            tvResultHasCall?.text = resultStr
             mSaveLogRequest.phone_connected = ConfigMgr.getPhoneConnect(true).toInt()
         }
         mSaveLogRequest.phone_time = callLogRecord.call_time
 
-        tvResult?.text = resultStr
         tvCallTime?.text = callLogRecord.call_time
         tvTakeTime?.text = duration + "s"
         updateButtonState()
@@ -207,5 +239,37 @@ class MobileFragment : BaseSubmitFragment() {
 
     private fun handleError() {
 
+    }
+
+    private fun clearCallTime(){
+        mSaveLogRequest.phone_time = null
+        tvCallTime?.text = "Click to select:"
+    }
+
+    private fun clearPhoneConnectResult(){
+        mSaveLogRequest.phone_connected = null
+        mSaveLogRequest.repay_inclination = null
+        tvResultHasCall?.text = ""
+        tvResultHasCall?.visibility = View.VISIBLE
+        llResultNotCall?.visibility = View.GONE
+        tvResultNotCall?.text = "Click to select:"
+    }
+
+   private fun clearFeedBack(){
+        mSaveLogRequest.result = null
+        llFeedBack?.isEnabled = false
+        llFeedBack?.isSelected = false
+        tvFeedBack?.text = "Click to select:"
+    }
+
+    private fun clearTakeTime(){
+        mSaveLogRequest.phone_time = null
+        tvTakeTime?.text = ""
+    }
+
+
+    private fun clearPromiseTime(){
+        mSaveLogRequest.promise_repay_time = null
+        llPromiseTime?.visibility = View.GONE
     }
 }

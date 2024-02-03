@@ -48,6 +48,9 @@ class WhatAppFragment : BaseSubmitFragment() {
                         override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                             mContact = contactList[pos]
                             tvTarget?.text = content?.first
+                            clearSelectTime()
+                            clearFeedBack()
+                            clearPromiseTime()
                             updateUi()
                         }
                     })
@@ -65,6 +68,8 @@ class WhatAppFragment : BaseSubmitFragment() {
                         tvTime?.text = phoneTimeStr
                         // 打电话时间
                         mSaveLogRequest.phone_time = phoneTimeStr
+                        clearFeedBack()
+                        clearPromiseTime()
                         updateButtonState()
                     }
                 })
@@ -87,40 +92,22 @@ class WhatAppFragment : BaseSubmitFragment() {
         llTime?.isEnabled = true
     }
 
-
-//    private fun updateUiByCallLogRecord(callLogRecord: CallLogRecord) {
-//        var resultStr : String
-//        var duration : String = ""
-//        when(callLogRecord.type) {
-//            (CallLog.Calls.OUTGOING_TYPE) -> {
-//                if (callLogRecord.duration != null && callLogRecord.duration!! > 0) {
-//                    resultStr = resources.getString(R.string.take)
-//                    duration = callLogRecord.duration.toString()
-//                } else {
-//                    resultStr = resources.getString(R.string.does_not_exist)
-//                }
-//            }
-//            else -> {
-//                resultStr = resources.getString(R.string.does_not_exist)
-//            }
-//        }
-//        tvResult?.text = resultStr
-//        tvCallTime?.text = callLogRecord.date.toString()
-//        tvTakeTime?.text = duration
-//    }
-
-//    private fun getRecordByTarget(num : String, date : String) : CallLogRecord?{
-//        for (index in 0 until CollectRecordLogMgr.mCallRecordList.size) {
-//            val callLogRecord = CollectRecordLogMgr.mCallRecordList[index]
-//            if (TextUtils.equals(callLogRecord.num, num) &&
-//                TextUtils.equals(callLogRecord.date.toString(), date)) {
-//                return callLogRecord
-//            }
-//        }
-//        return null
-//
-
     fun bindData() {
 
+    }
+
+    private fun clearFeedBack(){
+        mSaveLogRequest.result = null
+        tvFeedBack?.text = "Click to select:"
+    }
+
+    private fun clearSelectTime(){
+        mSaveLogRequest.phone_time = null
+        tvTime?.text = "Click to select:"
+    }
+
+    private fun clearPromiseTime(){
+        mSaveLogRequest.promise_repay_time = null
+        llPromiseTime?.visibility = View.GONE
     }
 }

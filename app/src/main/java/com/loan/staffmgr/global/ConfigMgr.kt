@@ -130,7 +130,7 @@ object ConfigMgr {
      * "phoneConnect":{"0":"Unconnected","1":"Connected","2":"SMS Sent"}}
      */
 
-    fun getPhoneConnect(isPhoneConnected : Boolean) : String {
+    fun getPhoneConnect(isPhoneConnected : Boolean, desc : String? = null) : String {
         var unconnectedInt = "0"
         var connectedInt = "1"
         for (index in 0 until mPhoneConnect.size) {
@@ -146,6 +146,14 @@ object ConfigMgr {
         if (isPhoneConnected) {
             return connectedInt
         } else {
+            // TODO
+            if (TextUtils.equals(desc, "Ring")) {
+                return "0"
+            } else if (TextUtils.equals(desc, "Does not exist")) {
+                return "2"
+            } else if (TextUtils.equals(desc, "Out of service")) {
+                return "3"
+            }
             return unconnectedInt
         }
     }

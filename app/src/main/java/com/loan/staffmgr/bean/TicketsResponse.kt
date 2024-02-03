@@ -21,6 +21,7 @@ class TicketsResponse {
 
         var status : Int? = null
         var promise_repay_date : String? = null
+        var last_collection_time : String? = null
         var case_level : String? = null
         var address : String? = null
         var order_id : Long? = null

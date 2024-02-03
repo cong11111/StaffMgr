@@ -58,7 +58,7 @@ class TicketListAdapter(val list : ArrayList<TicketsResponse>) :  RecyclerView.A
         holder.tv1?.text = ticket.ticket_id.toString()
         holder.tv2?.text = ticket.repay_amount.toString()
         if (isPtpMode) {
-            holder.tv3?.text = ticket.promise_repay_date.toString()
+            holder.tv3?.text = ticket.last_collection_time.toString()
             try {
                 //若PTP时间在未来一小时以上，显示为绿色；
                 //若PTP时间在未来一小时，显示为黄色；

@@ -52,6 +52,12 @@ abstract class BaseSubmitFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 初始化数据
+        mSaveLogRequest.ticket_id = RecordActivity.mTicket?.ticket_id
+        mSaveLogRequest.communication_way =
+            if (this@BaseSubmitFragment is MobileFragment) { 2 } else { 1 }
+
+
         flSubmit = view.findViewById<View>(R.id.fl_record_submit)
         llTarget = view.findViewById<LinearLayout>(R.id.ll_target_container)
         tvTarget = view.findViewById<AppCompatTextView>(R.id.tv_record_target)
@@ -64,19 +70,10 @@ abstract class BaseSubmitFragment : BaseFragment() {
 
         flSubmit?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                "remark": "test",
-//                "phone_objects": 1,
-//                "repay_inclination": 1,
                 if (!checkButtonState(true)) {
                     return
                 }
-                mSaveLogRequest.ticket_id = RecordActivity.mTicket?.ticket_id
-                val communication_way = if (this@BaseSubmitFragment is MobileFragment) {
-                    2
-                } else {
-                    1
-                }
-                mSaveLogRequest.communication_way = communication_way
+
                 submitSaveRecord(mSaveLogRequest)
             }
         })
@@ -168,6 +165,7 @@ abstract class BaseSubmitFragment : BaseFragment() {
                         return
                     }
                     ToastUtils.showShort("request save record success")
+                    activity?.finish()
                 }
 
                 override fun onError(response: Response<String>) {
@@ -208,29 +206,46 @@ abstract class BaseSubmitFragment : BaseFragment() {
             }
             return false
         }
-        if (mSaveLogRequest.communication_way == 2) {
-            if (mSaveLogRequest.phone_connected == null) {
-                if (showToast) {
-                    ToastUtils.showShort("unselect contact record.")
+        when (mSaveLogRequest.communication_way) {
+            (2) -> {
+                if (mSaveLogRequest.phone_connected == null) {
+                    if (showToast) {
+                        ToastUtils.showShort("unselect contact record.")
+                    }
+                    return false
                 }
-                return false
+                if (mSaveLogRequest.phone_connected == ConfigMgr.getPhoneConnect(true).toInt()) {
+                    if (mSaveLogRequest.repay_inclination == 1 && mSaveLogRequest.promise_repay_time == null) {
+                        if (showToast) {
+                            ToastUtils.showShort("unselect promise time.")
+                        }
+                        return false
+                    }
+                    if ( mSaveLogRequest.result == null) {
+                        if (showToast) {
+                            ToastUtils.showShort("unselect feedback.")
+                        }
+                        return false
+                    }
+                }
+            }
+            // what app
+            (1) -> {
+                if (mSaveLogRequest.repay_inclination == 1 && mSaveLogRequest.promise_repay_time == null) {
+                    if (showToast) {
+                        ToastUtils.showShort("unselect promise time.")
+                    }
+                    return false
+                }
+                if ( mSaveLogRequest.result == null) {
+                    if (showToast) {
+                        ToastUtils.showShort("unselect feedback.")
+                    }
+                    return false
+                }
             }
         }
-        if (mSaveLogRequest.phone_connected == 1) {
-            if (mSaveLogRequest.result == null
-            ) {
-                if (showToast) {
-                    ToastUtils.showShort("unselect feedback")
-                }
-                return false
-            }
-            if (mSaveLogRequest.repay_inclination == 1 && mSaveLogRequest.promise_repay_time == null) {
-                if (showToast) {
-                    ToastUtils.showShort("unselect promise time.")
-                }
-                return false
-            }
-        }
+
         return true
     }
 
@@ -257,10 +272,16 @@ abstract class BaseSubmitFragment : BaseFragment() {
 //        }
         //时间选择器
         val booleanArray = booleanArrayOf(true, true, true, true, true, true)
+        val startCalendar = Calendar.getInstance()
+        val endCalendar = Calendar.getInstance()
+        endCalendar.set(2100,12,31)
         val pvTime = TimePickerBuilder(context, listener)
+            .setRangDate(startCalendar, endCalendar)
             .setType(booleanArray)
             .setSubmitText("ok")
             .setCancelText("cancel").build()
         pvTime.show()
     }
+
+
 }

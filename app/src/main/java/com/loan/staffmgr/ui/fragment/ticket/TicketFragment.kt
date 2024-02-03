@@ -37,6 +37,7 @@ import com.loan.staffmgr.ui.fragment.BaseHomeFragment
 import com.loan.staffmgr.ui.fragment.ticket.adapter.TicketAdapter
 import com.loan.staffmgr.utils.BuildRecordUtils
 import com.loan.staffmgr.utils.CheckResponseUtils
+import com.loan.staffmgr.utils.MyDateUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -313,7 +314,13 @@ class TicketFragment : BaseHomeFragment() {
             tvName?.text = ticket?.name.toString()
             tvAddrress?.text = ticket?.address.toString()
             tvOrderId?.text = ticket?.order_id.toString()
-            tvDueDate?.text = ticket?.due_date.toString() + "    " + ticket?.due_days + " DAYS"
+            var dueStr = ticket?.due_date.toString()
+            try {
+                dueStr = MyDateUtils.reverseStr(dueStr)
+            } catch (e : java.lang.Exception) {
+
+            }
+            tvDueDate?.text = dueStr + "    " + ticket?.due_days + " DAYS"
             tvRepayAmount?.text = ticket?.repay_amount.toString()
             tvPrincipal?.text = ticket?.principal.toString()
             tvPenalty?.text = ticket?.penalty.toString()
@@ -342,6 +349,8 @@ class TicketFragment : BaseHomeFragment() {
             mTicketAdapter?.notifyDataSetChanged()
         }
     }
+
+
 
     private fun bindFirstItem(firstItem: TicketsResponse.Contact) {
         if (firstItem.mobile == null) {

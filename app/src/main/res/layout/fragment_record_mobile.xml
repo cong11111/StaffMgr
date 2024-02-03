@@ -116,16 +116,58 @@
                         android:id="@+id/ll_result_container"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/cm_dp_56"
+                        android:layout_marginTop="@dimen/cm_dp_20"
                         android:layout_marginStart="@dimen/cm_dp_20">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/include_ticket_1_start"
                             android:text="Result:" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_record_result"
+                        <FrameLayout
                             style="@style/include_ticket_end"
-                            tools:text="result:" />
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="-15dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_record_result_hascall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/cm_dp_15"
+                                android:layout_gravity="center_vertical|start"
+                                tools:text="result:" />
+
+                            <FrameLayout
+                                android:id="@+id/ll_record_not_calllog"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingStart="15dp"
+                                android:background="@drawable/bg_black_radius_25"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tv_record_not_calllog"
+                                    style="@style/include_ticket_end"
+                                    android:layout_height="match_parent"
+                                    android:layout_width="match_parent"
+                                    android:gravity="center_vertical|start"
+                                    android:layout_marginStart="0dp"
+                                    android:text="Click to select:"
+                                    tools:text="Click to select:" />
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="@dimen/cm_dp_28"
+                                    android:src="@drawable/bottom_arrow"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_marginEnd="@dimen/cm_dp_10"
+                                    android:layout_height="@dimen/cm_dp_28"/>
+
+                            </FrameLayout>
+
+
+                        </FrameLayout>
+
+
 
                     </LinearLayout>
 
@@ -133,11 +175,12 @@
                         android:id="@+id/ll_take_time_container"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/cm_dp_56"
+                        android:layout_marginTop="@dimen/cm_dp_15"
                         android:layout_marginStart="@dimen/cm_dp_20">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/include_ticket_1_start"
-                            android:text="Take time:" />
+                            android:text="Talk time:" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_record_take_time"

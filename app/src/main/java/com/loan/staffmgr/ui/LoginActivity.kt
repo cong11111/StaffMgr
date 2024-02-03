@@ -92,8 +92,8 @@ class LoginActivity : BaseActivity() {
             etPhonePwd?.setSelectionLast()
         }
         if (BuildConfig.DEBUG && TextUtils.isEmpty(account) && TextUtils.isEmpty(pwd)) {
-            etPhoneNum?.getEditText()?.setText("Collection4@icredit.com")
-            etPhonePwd?.getEditText()?.setText("Ab!123463")
+            etPhoneNum?.getEditText()?.setText("Collection6@icredit.com")
+            etPhonePwd?.getEditText()?.setText("Ab!123456")
         }
 
         PermissionUtils.permission(Manifest.permission.READ_PHONE_STATE,

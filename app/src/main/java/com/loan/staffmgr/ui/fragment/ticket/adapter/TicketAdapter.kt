@@ -32,7 +32,7 @@ class TicketAdapter(val contactLists: ArrayList<TicketsResponse.Contact>, val fr
         })
         holder.tvId?.text = contact?.key.toString()
         holder.tvRelationShip?.text =  contact?.relationship.toString()
-        holder.tvName?.text = contact?.flag.toString()
+        holder.tvName?.text = contact?.mobile.toString()
         if (!TextUtils.isEmpty(contact.mobile)) {
             fragment?.setCallCountByPhoneNum(contact, holder.tvCount)
         }

@@ -86,7 +86,7 @@ class DashBoardFragment : BaseHomeFragment() {
         }
         updateFirstReloan(data.collection?.assign_amount, tvAssignFirst, tvAssignReloan)
         updateFirstReloan(data.collection?.repay_amount, tvRepayFirst, tvRepayReloan)
-        updateFirstReloan(data.collection?.repay_amount, tvRateFirst, tvRateReloan)
+        updateFirstReloan(data.collection?.repay_rate, tvRateFirst, tvRateReloan)
         val rank = data.collection?.current_rank?.rank
         tvRank?.text = rank
     }

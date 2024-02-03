@@ -97,6 +97,30 @@ object BuildRecordUtils {
         return datef
     }
 
+    fun buildCallResultList() : ArrayList<Pair<String, String>> {
+        val list = ArrayList<Pair<String, String>>()
+
+
+        if (App.mContext != null) {
+            //        if (ConfigMgr.mResult.isNotEmpty()) {
+//            for (index in 0 until ConfigMgr.mResult.size) {
+//                val dueResult = ConfigMgr.mResult[index]
+//                list.add(Pair(dueResult.Lang, dueResult.Id.toString()))
+//            }
+//            return list
+//        }
+        }
+        val resources = App.mContext!!.resources
+        val str2 = resources.getString(R.string.ring)
+        val str3 = resources.getString(R.string.does_not_exist)
+        val str4 = resources.getString(R.string.out_of_service)
+
+        list.add(Pair(str2, "2"))
+        list.add(Pair(str3, "3"))
+        list.add(Pair(str4, "4"))
+        return list
+    }
+
     fun buildFeedbackList() : ArrayList<Pair<String, String>> {
         val list = ArrayList<Pair<String, String>>()
         if (ConfigMgr.mResult.isNotEmpty()) {
