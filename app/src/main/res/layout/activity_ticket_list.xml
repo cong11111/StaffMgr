@@ -13,11 +13,12 @@
 
         <ImageView
             android:id="@+id/iv_ticket_back"
-            android:layout_width="@dimen/cm_dp_36"
-            android:layout_height="@dimen/cm_dp_36"
+            android:layout_width="@dimen/cm_dp_42"
+            android:layout_height="@dimen/cm_dp_42"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
-            android:padding="6dp"
+            android:background="@drawable/click_ic_bg"
+            android:padding="8dp"
             android:src="@drawable/btn_back" />
 
         <androidx.appcompat.widget.AppCompatTextView

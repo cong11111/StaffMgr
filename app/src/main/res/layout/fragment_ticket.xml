@@ -27,8 +27,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/cm_dp_20"
-                        android:layout_height="wrap_content">
+                        android:layout_height="@dimen/dp_45">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -42,13 +41,33 @@
                             android:layout_height="wrap_content"
                             android:text="@string/tickets" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_ticket_list"
+                        <LinearLayout
+                            android:id="@+id/ll_ticket_list"
                             android:layout_width="wrap_content"
-                            android:text="list"
+                            android:orientation="vertical"
+                            android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/cm_dp_20"
                             android:layout_alignParentEnd="true"
-                            android:layout_height="wrap_content"/>
+                            android:background="@drawable/click_ic_bg"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:src="@drawable/ic_tab_plan"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_height="wrap_content"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_ticket_list"
+                                android:layout_width="wrap_content"
+                                android:text="Ticket list"
+                                android:textColor="#444444"
+                                android:includeFontPadding="false"
+                                android:textSize="9sp"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
 
                     </RelativeLayout>
 

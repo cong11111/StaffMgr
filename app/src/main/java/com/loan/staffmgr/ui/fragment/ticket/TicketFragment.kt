@@ -84,7 +84,7 @@ class TicketFragment : BaseHomeFragment() {
     private var scrollView : NestedScrollView? = null
     private var tvMyPhoneNum : AppCompatTextView? = null
     private var tvMyCallCount : AppCompatTextView? = null
-    private var tvListTitle : AppCompatTextView? = null
+    private var viewListTitle : View? = null
     private var mRefreshLayout : SmartRefreshLayout? = null
     private var flLoading : FrameLayout? = null
 
@@ -109,7 +109,7 @@ class TicketFragment : BaseHomeFragment() {
         tvRepayAmount = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_repay_amount)
         tvPrincipal = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_principal)
         tvPenalty = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_penalty)
-        tvListTitle = view.findViewById<AppCompatTextView>(R.id.tv_ticket_list)
+        viewListTitle = view.findViewById<View>(R.id.ll_ticket_list)
 
         tvT3Desc = view.findViewById<AppCompatTextView>(R.id.tv_ticket3_desc)
         tvT3Copy = view.findViewById<AppCompatTextView>(R.id.tv_ticket3_va_link_copy)
@@ -190,7 +190,7 @@ class TicketFragment : BaseHomeFragment() {
             }
 
         })
-        tvListTitle?.setOnClickListener(object : OnClickListener {
+        viewListTitle?.setOnClickListener(object : OnClickListener {
             override fun onClick(v: View?) {
                 if (context == null) {
                     return

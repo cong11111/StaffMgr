@@ -86,7 +86,7 @@ class SplashActivity : BaseActivity() {
 //        Log.e(TAG, " token = " + token)
 
         if (TextUtils.isEmpty(account) || TextUtils.isEmpty(pwd)
-            || TextUtils.isEmpty(expire) || TextUtils.isEmpty(token) ||true) {
+            || TextUtils.isEmpty(expire) || TextUtils.isEmpty(token)) {
 //            if (!canUseToken && BuildConfig.DEBUG) {
             if (BuildConfig.DEBUG) {
                 mHandler?.postDelayed(Runnable {

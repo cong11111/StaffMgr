@@ -10,9 +10,13 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import android.util.Log
+import com.blankj.utilcode.util.ThreadUtils
+import com.loan.staffmgr.collect.CallLogRecord
 import com.loan.staffmgr.collect.CollectRecordLogMgr
 import com.loan.staffmgr.collect.ReportCallLogMgr
 import com.loan.staffmgr.global.App
+import com.loan.staffmgr.utils.log.LogSaver
+import java.util.ArrayList
 
 
 class PhoneBroadcastReceiver : BroadcastReceiver() {
@@ -71,8 +75,24 @@ class PhoneBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun hookOff() {
-        ReportCallLogMgr.uploadCallLog()
-        CollectRecordLogMgr.readCallRecordInNewThread()
+        LogSaver.logToFile("hand up the phone  ")
+        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<ArrayList<CallLogRecord>?>() {
+            override fun doInBackground(): ArrayList<CallLogRecord>? {
+                if (App.mContext != null) {
+                    return CollectRecordLogMgr.readCallRecord(App.mContext!!)
+                }
+                return null
+            }
+
+            override fun onSuccess(result: ArrayList<CallLogRecord>?) {
+                if (result == null) {
+                    return
+                }
+                CollectRecordLogMgr.setData(result)
+                ReportCallLogMgr.uploadCallLog()
+            }
+
+        })
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {

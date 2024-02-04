@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.util.BarUtils
@@ -75,6 +77,13 @@ class MainActivity : BaseActivity() {
     private fun initView() {
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout_container)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        val ivMainMenu = findViewById<ImageView>(R.id.iv_main_menu)
+        val drawable = resources.getDrawable(R.drawable.ic_main_menu)
+        DrawableCompat.setTint(drawable, resources.getColor(R.color.color_212121))
+        ivMainMenu.setImageDrawable(drawable)
+        ivMainMenu.setOnClickListener{
+            drawerLayout?.openDrawer(GravityCompat.START)
+        }
         bottomNavigationView.setOnItemSelectedListener(object : NavigationBarView.OnItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when(item.itemId) {

@@ -6,6 +6,7 @@ import com.loan.staffmgr.bean.CallLogRequest
 import com.loan.staffmgr.bean.TicketsResponse
 import com.loan.staffmgr.global.Api
 import com.loan.staffmgr.utils.CheckResponseUtils
+import com.loan.staffmgr.utils.log.LogSaver
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -51,6 +52,7 @@ object ReportCallLogMgr {
             val callLogRequest = CallLogRequest.buildData(list[index])
             tempList.add(callLogRequest)
         }
+        LogSaver.logToFile("upload call log size = " + tempList.size)
 //        Log.e("Test", " upload log")
         OkGo.post<String>(Api.RECORD_ADD).tag(TAG)
             .upJson(com.alibaba.fastjson.JSONArray.toJSONString(tempList))
