@@ -1,8 +1,10 @@
 package com.loan.staffmgr.global
 
+import com.loan.staffmgr.BuildConfig
+
 object Api {
 
-       private const val HOST = "http://dcapi.chucard.com"
+       private const val HOST =  BuildConfig.HOST
        //获取登录验证码
        const val SEND_SMS = "$HOST/v1/admin/captcha"
        // 登录获取token

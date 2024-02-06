@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -13,7 +15,7 @@ android {
         targetSdk 33
         versionCode 10011
         versionName "1.0.1"
-
+        flavorDimensions("default")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -28,6 +30,30 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
+    productFlavors {
+        apiTest {
+            dimension "default"
+            resValue "string", "app_name_1", "@string/app_name_test"
+            buildConfigField "boolean", "USE_ONLINE_API", "false"
+            manifestPlaceholders = [CHANNEL_VALUE: "KudiCredit"]
+            buildConfigField "String", "HOST", "\"http://dcapi.chucard.com\""
+        }
+        apiOnline {
+            dimension "default"
+            resValue "string", "app_name_1", "@string/app_name"
+            buildConfigField "boolean", "USE_ONLINE_API", "true"
+            manifestPlaceholders = [CHANNEL_VALUE: "KudiCredit"]
+            buildConfigField "String", "HOST", "\"https://dcapi.icredit.ng\""
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "Collects_" + variant.productFlavors[0].name + "_" + releaseTime() + ".apk"
+            outputFileName = outputFileName
+        }
+    }
+
     signingConfigs {
         debug {
 //            storeFile file('D:\\code\\icrediteditapp\\app\\icredit_test.jks')
@@ -39,6 +65,11 @@ android {
             keyPassword "123456"
         }
     }
+}
+
+static def releaseTime() {
+//    return new SimpleDateFormat("MM_dd_hh_mm",Locale.CHINA).format(new Date());
+    return new SimpleDateFormat("MM_dd", Locale.CHINA).format(new Date());
 }
 
 dependencies {

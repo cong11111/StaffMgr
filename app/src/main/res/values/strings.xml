@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Collections</string>
+    <string name="app_name_test">Collections Debug</string>
     <string name="welcome_to_collections">Welcome to Collections</string>
 
     <string name="signin_captcha">send sms</string>

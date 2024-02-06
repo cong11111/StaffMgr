@@ -92,8 +92,10 @@ class LoginActivity : BaseActivity() {
             etPhonePwd?.setSelectionLast()
         }
         if (BuildConfig.DEBUG && TextUtils.isEmpty(account) && TextUtils.isEmpty(pwd)) {
-            etPhoneNum?.getEditText()?.setText("Collection6@icredit.com")
-            etPhonePwd?.getEditText()?.setText("Ab!123456")
+//            etPhoneNum?.getEditText()?.setText("Collection6@icredit.com")
+            etPhoneNum?.getEditText()?.setText("Dc50@icredit.ng")
+//            etPhonePwd?.getEditText()?.setText("Ab!123456")
+            etPhonePwd?.getEditText()?.setText("!Sekemi1234")
         }
 
         PermissionUtils.permission(Manifest.permission.READ_PHONE_STATE,
@@ -233,7 +235,7 @@ class LoginActivity : BaseActivity() {
         jsonObject.put("account", account)
         jsonObject.put("password", pwd)
 //        jsonObject.put("mobile", phoneNumber)
-        jsonObject.put("captcha", captcha)
+//        jsonObject.put("captcha", captcha)
         jsonObject.put("appVersionCode", AppUtils.getAppVersionCode())
         OkGo.post<String>(Api.LOGIN).tag(TAG)
             .upJson(jsonObject)
