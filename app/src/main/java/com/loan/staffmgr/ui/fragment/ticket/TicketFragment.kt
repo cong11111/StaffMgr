@@ -424,11 +424,15 @@ class TicketFragment : BaseHomeFragment() {
         if (TextUtils.isEmpty(phoneNum)) {
             return
         }
+        var mPhoneNum : String = ""
+        if (phoneNum!!.startsWith("234") && phoneNum.length == 13) {
+            mPhoneNum = "+$phoneNum"
+        }
         PermissionUtils.permission(Manifest.permission.CALL_PHONE).callback(object :
             PermissionUtils.SimpleCallback {
             override fun onGranted() {
-                if (!TextUtils.isEmpty(phoneNum)) {
-                    PhoneUtils.call(phoneNum!!)
+                if (!TextUtils.isEmpty(mPhoneNum)) {
+                    PhoneUtils.call(mPhoneNum!!)
                 }
             }
 
