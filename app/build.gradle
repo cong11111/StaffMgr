@@ -3,6 +3,8 @@ import java.text.SimpleDateFormat
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -88,6 +90,10 @@ dependencies {
     implementation 'io.github.scwang90:refresh-layout-kernel:2.1.0'      //核心必须依赖
     implementation 'io.github.scwang90:refresh-footer-classics:2.1.0'    //经典加载
     implementation 'io.github.scwang90:refresh-header-material:2.1.0'
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //下拉框
     implementation ('com.github.arcadefire:nice-spinner:1.4.4') {
