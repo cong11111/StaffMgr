@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797809015370",
+    "project_id": "staffmgr-73d78",
+    "storage_bucket": "staffmgr-73d78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797809015370:android:2f0f9193a3c382215384b3",
+        "android_client_info": {
+          "package_name": "com.loan.staffmgr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSwfaNa5anVgdiOwWnpstqxNZdEGnMP1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
