@@ -85,6 +85,7 @@ class TicketFragment : BaseHomeFragment() {
     private var tvMyPhoneNum : AppCompatTextView? = null
     private var tvMyCallCount : AppCompatTextView? = null
     private var viewListTitle : View? = null
+    private var viewSync : View? = null
     private var mRefreshLayout : SmartRefreshLayout? = null
     private var flLoading : FrameLayout? = null
 
@@ -110,6 +111,7 @@ class TicketFragment : BaseHomeFragment() {
         tvPrincipal = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_principal)
         tvPenalty = view.findViewById<AppCompatTextView>(R.id.tv_ticket_1_penalty)
         viewListTitle = view.findViewById<View>(R.id.ll_ticket_list)
+        viewSync = view.findViewById<View>(R.id.ll_sync)
 
         tvT3Desc = view.findViewById<AppCompatTextView>(R.id.tv_ticket3_desc)
         tvT3Copy = view.findViewById<AppCompatTextView>(R.id.tv_ticket3_va_link_copy)
@@ -199,6 +201,12 @@ class TicketFragment : BaseHomeFragment() {
                 Constant.mTicketLists.addAll(mTicketLists)
                 val intent = TicketListActivity.getIntent(context!!)
                 mActivityResultLauncher?.launch(intent)
+            }
+
+        })
+        viewSync?.setOnClickListener(object : OnClickListener {
+            override fun onClick(v: View?) {
+                ReportCallLogMgr.readAndUpload()
             }
 
         })

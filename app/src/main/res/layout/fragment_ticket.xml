@@ -40,33 +40,65 @@
                             android:textColor="@color/black"
                             android:layout_height="wrap_content"
                             android:text="@string/tickets" />
-
                         <LinearLayout
-                            android:id="@+id/ll_ticket_list"
                             android:layout_width="wrap_content"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/cm_dp_20"
                             android:layout_alignParentEnd="true"
-                            android:background="@drawable/click_ic_bg"
                             android:layout_height="wrap_content">
 
-                            <androidx.appcompat.widget.AppCompatImageView
+                            <LinearLayout
+                                android:id="@+id/ll_sync"
                                 android:layout_width="wrap_content"
-                                android:src="@drawable/ic_tab_plan"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_height="wrap_content"/>
+                                android:orientation="vertical"
+                                android:layout_marginEnd="@dimen/cm_dp_12"
+                                android:background="@drawable/click_ic_bg"
+                                android:layout_height="wrap_content">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_ticket_list"
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="23dp"
+                                    android:src="@drawable/sync"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_height="23dp"/>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:text="Sync record"
+                                    android:textColor="#444444"
+                                    android:includeFontPadding="false"
+                                    android:textSize="9sp"
+                                    android:layout_marginTop="1dp"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/ll_ticket_list"
                                 android:layout_width="wrap_content"
-                                android:text="Ticket list"
-                                android:textColor="#444444"
-                                android:includeFontPadding="false"
-                                android:textSize="9sp"
-                                android:layout_height="wrap_content"/>
+                                android:orientation="vertical"
+                                android:background="@drawable/click_ic_bg"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="24dp"
+                                    android:src="@drawable/ic_tab_plan"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_height="24dp"/>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tv_ticket_list"
+                                    android:layout_width="wrap_content"
+                                    android:text="Ticket list"
+                                    android:textColor="#444444"
+                                    android:includeFontPadding="false"
+                                    android:textSize="9sp"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
+
 
 
                     </RelativeLayout>

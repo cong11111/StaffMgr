@@ -1,12 +1,17 @@
 package com.loan.staffmgr.collect
 
+import android.os.Build
+import android.os.SystemClock
 import android.text.TextUtils
 import android.util.Log
+import com.blankj.utilcode.util.ThreadUtils
 import com.loan.staffmgr.bean.CallLogRequest
 import com.loan.staffmgr.bean.TicketsResponse
 import com.loan.staffmgr.global.Api
+import com.loan.staffmgr.global.App
 import com.loan.staffmgr.utils.CheckResponseUtils
 import com.loan.staffmgr.utils.log.LogSaver
+import com.lzy.okgo.BuildConfig
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -16,6 +21,9 @@ object ReportCallLogMgr {
     val TAG = "ReportCallLogMgr"
 
     val mSet =  HashSet<String>()
+    val mListeners =  HashSet<CallBack>()
+
+    private var isUploading : Boolean = false
 
     fun uploadCallLog() {
         val resultList: ArrayList<CallLogRecord> = ArrayList()
@@ -29,6 +37,7 @@ object ReportCallLogMgr {
         if (resultList.isNotEmpty()) {
             realUploadCallLog(resultList)
         } else {
+            executeOnEnd(false," No need upload.")
             Log.e("Okhttp", " no need upload,")
         }
     }
@@ -59,11 +68,12 @@ object ReportCallLogMgr {
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
                     val responseStr = CheckResponseUtils.checkResponseSuccess(response)
-
+                    executeOnEnd(true)
                 }
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    executeOnEnd(false)
                 }
             })
     }
@@ -86,5 +96,66 @@ object ReportCallLogMgr {
             mSet.clear()
             mSet.addAll(set)
         }
+    }
+
+    fun readAndUpload(){
+        executeOnStart()
+        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<java.util.ArrayList<CallLogRecord>?>() {
+            override fun doInBackground(): java.util.ArrayList<CallLogRecord>? {
+                if (com.loan.staffmgr.BuildConfig.DEBUG) {
+                    SystemClock.sleep(5000)
+                }
+                if (App.mContext != null) {
+                    return CollectRecordLogMgr.readCallRecord(App.mContext!!)
+                }
+                return null
+            }
+
+            override fun onSuccess(result: java.util.ArrayList<CallLogRecord>?) {
+                if (result == null) {
+                    executeOnEnd(false)
+                    return
+                }
+                CollectRecordLogMgr.setData(result)
+                uploadCallLog()
+            }
+
+        })
+    }
+
+    interface CallBack {
+        fun onStart()
+
+        fun onEnd(isSuccess : Boolean, desc: String?)
+    }
+
+    private fun executeOnStart() {
+        isUploading = true
+        val iterator = mListeners.iterator()
+        while (iterator.hasNext()){
+            val next = iterator.next()
+            next.onStart()
+        }
+    }
+
+    private fun executeOnEnd(isSuccess : Boolean , desc : String? = null) {
+        isUploading = false
+        val iterator = mListeners.iterator()
+        while (iterator.hasNext()){
+            val next = iterator.next()
+            next.onEnd(isSuccess, desc)
+        }
+    }
+
+    fun addCallBack(callBack: CallBack) {
+        mListeners.add(callBack)
+    }
+
+    fun removeCallBack(callBack: CallBack) {
+        mListeners.remove(callBack)
+    }
+
+    fun removeAll() {
+        mListeners.clear()
     }
 }

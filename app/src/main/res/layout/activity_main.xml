@@ -78,5 +78,40 @@
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
+    <FrameLayout
+        android:id="@+id/fl_sync_loading"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:clickable="true"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_radius_loading_15"
+            android:layout_height="wrap_content">
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_loading_desc"
+                android:layout_width="wrap_content"
+                android:text="@string/sync_call_record"
+                android:layout_gravity="center"
+                android:textSize="@dimen/cm_sp_21"
+                android:textColor="@color/white"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 </FrameLayout>

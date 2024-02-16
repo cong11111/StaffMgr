@@ -3,13 +3,16 @@ package com.loan.staffmgr.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ThreadUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.loan.staffmgr.R
@@ -32,6 +35,7 @@ class MainActivity : BaseActivity() {
 
     private var drawerLayout: DrawerLayout? = null
     private var settingFragment: SettingFragment? = null
+    private var flLoading: View? = null
 
     companion object {
         const val TAG = "MainActivity"
@@ -55,6 +59,7 @@ class MainActivity : BaseActivity() {
         initView()
         switchFragment(0)
         initData()
+        ReportCallLogMgr.addCallBack(mCallBack)
     }
 
     private fun initData() {
@@ -78,6 +83,7 @@ class MainActivity : BaseActivity() {
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout_container)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         val ivMainMenu = findViewById<ImageView>(R.id.iv_main_menu)
+        flLoading = findViewById<View>(R.id.fl_sync_loading)
         val drawable = resources.getDrawable(R.drawable.ic_main_menu)
         DrawableCompat.setTint(drawable, resources.getColor(R.color.color_212121))
         ivMainMenu.setImageDrawable(drawable)
@@ -122,5 +128,30 @@ class MainActivity : BaseActivity() {
 
     fun closeSlide() {
         drawerLayout?.closeDrawer(GravityCompat.START)
+    }
+
+    private val mCallBack = object : ReportCallLogMgr.CallBack {
+        override fun onStart() {
+            flLoading?.visibility = View.VISIBLE
+        }
+
+        override fun onEnd(isSuccess: Boolean, desc : String?) {
+            flLoading?.visibility = View.GONE
+            if (!isSuccess) {
+                var resultStr = "Sync data failure"
+                if (!TextUtils.isEmpty(desc)) {
+                    resultStr = desc!!
+                }
+                ToastUtils.showShort(resultStr)
+            } else {
+                ToastUtils.showShort("Sync data success")
+            }
+        }
+
+    }
+
+    override fun onDestroy() {
+        ReportCallLogMgr.removeAll()
+        super.onDestroy()
     }
 }

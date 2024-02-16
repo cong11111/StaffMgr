@@ -76,23 +76,7 @@ class PhoneBroadcastReceiver : BroadcastReceiver() {
 
     private fun hookOff() {
         LogSaver.logToFile("hand up the phone  ")
-        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<ArrayList<CallLogRecord>?>() {
-            override fun doInBackground(): ArrayList<CallLogRecord>? {
-                if (App.mContext != null) {
-                    return CollectRecordLogMgr.readCallRecord(App.mContext!!)
-                }
-                return null
-            }
-
-            override fun onSuccess(result: ArrayList<CallLogRecord>?) {
-                if (result == null) {
-                    return
-                }
-                CollectRecordLogMgr.setData(result)
-                ReportCallLogMgr.uploadCallLog()
-            }
-
-        })
+        ReportCallLogMgr.readAndUpload()
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
