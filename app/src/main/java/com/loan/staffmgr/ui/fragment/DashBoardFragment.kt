@@ -66,6 +66,9 @@ class DashBoardFragment : BaseHomeFragment() {
         mRefreshLayout?.setHeaderTriggerRate(3f)
         mRefreshLayout?.setOnRefreshListener(object : OnRefreshListener {
             override fun onRefresh(refreshLayout: RefreshLayout) {
+                if (isDestroy()) {
+                    return
+                }
                 requestDashboard()
             }
 
@@ -138,5 +141,10 @@ class DashBoardFragment : BaseHomeFragment() {
                 }
             })
 
+    }
+
+    override fun onDestroy() {
+        mRefreshLayout?.finishRefresh()
+        super.onDestroy()
     }
 }

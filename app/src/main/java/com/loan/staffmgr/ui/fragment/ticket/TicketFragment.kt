@@ -214,6 +214,9 @@ class TicketFragment : BaseHomeFragment() {
         mRefreshLayout?.setEnableRefresh(true)
         mRefreshLayout?.setOnRefreshListener(object : OnRefreshListener {
             override fun onRefresh(refreshLayout: RefreshLayout) {
+                if (isDestroy()) {
+                    return
+                }
                 requestTickets()
             }
 
@@ -409,11 +412,12 @@ class TicketFragment : BaseHomeFragment() {
 
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
+        mRefreshLayout?.finishRefresh()
         super.onDestroy()
     }
 
     private fun getTicketResponse() : TicketsResponse? {
-        if (mTicketLists.size == 0){
+        if (mTicketLists.size == 0 || mCurPos == -1){
             return null
         }
         return mTicketLists[mCurPos]
@@ -432,7 +436,7 @@ class TicketFragment : BaseHomeFragment() {
         if (TextUtils.isEmpty(phoneNum)) {
             return
         }
-        var mPhoneNum : String = ""
+        var mPhoneNum : String = phoneNum!!
         if (phoneNum!!.startsWith("234") && phoneNum.length == 13) {
             mPhoneNum = "+$phoneNum"
         }

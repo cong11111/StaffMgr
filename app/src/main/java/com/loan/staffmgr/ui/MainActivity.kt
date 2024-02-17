@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseActivity
+import com.loan.staffmgr.boardcast.PhoneBroadcastReceiver
 import com.loan.staffmgr.collect.CallLogRecord
 import com.loan.staffmgr.collect.CollectRecordLogMgr
 import com.loan.staffmgr.collect.ReportCallLogMgr
@@ -59,6 +60,7 @@ class MainActivity : BaseActivity() {
         initView()
         switchFragment(0)
         initData()
+        PhoneBroadcastReceiver.addReceiveMsg()
         ReportCallLogMgr.addCallBack(mCallBack)
     }
 
@@ -152,6 +154,7 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         ReportCallLogMgr.removeAll()
+        PhoneBroadcastReceiver.removeReceiveMsg()
         super.onDestroy()
     }
 }
