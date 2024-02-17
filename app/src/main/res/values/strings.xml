@@ -50,5 +50,6 @@
 
     <string name="setting_feed_back">Feedback</string>
     <string name="setting_logout">Logout</string>
+    <string name="setting_about">About</string>
     <string name="sync_call_record">Sync call record...</string>
 </resources>

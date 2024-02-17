@@ -25,6 +25,7 @@ import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseFragment
 import com.loan.staffmgr.bean.SettingBean
 import com.loan.staffmgr.global.Constant
+import com.loan.staffmgr.ui.AboutActivity
 import com.loan.staffmgr.ui.LoginActivity
 import com.loan.staffmgr.ui.MainActivity
 import com.loan.staffmgr.utils.BuildRequestJsonUtils
@@ -76,10 +77,10 @@ class SettingFragment : BaseFragment() {
                         logOut()
                         closeSlide()
                     }
-//                    PageType.TEST_TO_PROFILE -> {
-//                        test()
-//                        closeSlide()
-//                    }
+                    PageType.ABOUT -> {
+                        startActivity(Intent(context, AboutActivity::class.java))
+                        closeSlide()
+                    }
 //                    PageType.TEST_TO_PROFILE2 -> {
 //                        test1()
 //                        closeSlide()
@@ -177,6 +178,7 @@ class SettingFragment : BaseFragment() {
 //            )
 //        )
         mList.add(SettingBean(R.drawable.ic_help, R.string.setting_feed_back, PageType.FEED_BACK, false))
+        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 
 //        if (BuildConfig.DEBUG && true) {
@@ -203,7 +205,7 @@ class SettingFragment : BaseFragment() {
     private fun closeSlide(){
         if (activity is MainActivity) {
             var main: MainActivity = activity as MainActivity
-//            main.closeSlide()
+            main.closeSlide()
         }
     }
 
