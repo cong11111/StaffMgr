@@ -17,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.loan.staffmgr.R
 import com.loan.staffmgr.base.BaseActivity
-import com.loan.staffmgr.boardcast.PhoneBroadcastReceiver
+import com.loan.staffmgr.callphone.PhoneStateObserver
 import com.loan.staffmgr.collect.CallLogRecord
 import com.loan.staffmgr.collect.CollectRecordLogMgr
 import com.loan.staffmgr.collect.ReportCallLogMgr
@@ -59,9 +59,23 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         initView()
         switchFragment(0)
-        initData()
-        PhoneBroadcastReceiver.addReceiveMsg()
+        try {
+            PhoneStateObserver.addReceiveMsg()
+        } catch (e : Exception) {
+            Constant.isTeleServiceDisable = true
+            LogSaver.logToFile(" init phone state observer error = " + e.localizedMessage)
+        }
         ReportCallLogMgr.addCallBack(mCallBack)
+        if (!Constant.isTeleServiceDisable) {
+            initData()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Constant.isTeleServiceDisable){
+            ReportCallLogMgr.readAndUpload()
+        }
     }
 
     private fun initData() {
@@ -154,7 +168,13 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         ReportCallLogMgr.removeAll()
-        PhoneBroadcastReceiver.removeReceiveMsg()
+        try {
+            Constant.isTeleServiceDisable = true
+            PhoneStateObserver.removeReceiveMsg()
+        } catch (e : Exception) {
+            LogSaver.logToFile(" phone state remove error = " + e.localizedMessage)
+        }
+
         super.onDestroy()
     }
 }

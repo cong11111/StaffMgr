@@ -1,6 +1,5 @@
 package com.loan.staffmgr.global
 
-import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.bean.DashboardResponse
 import com.loan.staffmgr.bean.TicketsResponse
 
@@ -19,6 +18,8 @@ object Constant {
     var mDashBoard : DashboardResponse? = null
 
     var IS_LOCAL_TEST_DATA : Boolean = true
+
+    var isTeleServiceDisable = false
 
     var mTicketLists : ArrayList<TicketsResponse> = ArrayList()
 
