@@ -15,8 +15,8 @@ android {
         applicationId "com.loan.staffmgr"
         minSdk 24
         targetSdk 33
-        versionCode 10013
-        versionName "1.0.3"
+        versionCode 10014
+        versionName "1.0.4"
         flavorDimensions("default")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
