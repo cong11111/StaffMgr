@@ -23,4 +23,8 @@ object Api {
 
        const val RECORD_LIST = "$HOST/v1/call/record/list"
 
+       const val SMS_PREVIEW = "$HOST/v1/sms/preview"
+
+       const val SMS_SEND = "$HOST/v1/sms/send"
+
 }

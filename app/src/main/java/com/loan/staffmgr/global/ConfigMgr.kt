@@ -157,4 +157,27 @@ object ConfigMgr {
             return unconnectedInt
         }
     }
+
+    fun getSmsPreview(orderId : Int) {
+        val jsonObject = JSONObject()
+        jsonObject.put("order_id", orderId)
+        OkGo.post<String>(Api.SMS_PREVIEW).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    val responseStr = CheckResponseUtils.checkResponseSuccess(response)
+                    if (TextUtils.isEmpty(responseStr)) {
+                        return
+                    }
+                   val data = JSONObject(responseStr).optString("data");
+                   Log.e(TAG, " data = " + data);
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+
+                }
+            })
+
+    }
 }

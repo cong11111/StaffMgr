@@ -222,7 +222,7 @@ class TicketFragment : BaseHomeFragment() {
 
         })
         bindData()
-        mRefreshLayout?.autoRefresh()
+        mRefreshLayout?.autoRefresh(100)
 
         mActivityResultLauncher =  registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
