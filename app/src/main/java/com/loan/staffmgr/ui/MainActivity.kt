@@ -121,7 +121,7 @@ class MainActivity : BaseActivity() {
 
         })
         ConfigMgr.requestConfig()
-        ConfigMgr.getSmsPreview()
+//        ConfigMgr.getSmsPreview()
         LogSaver.logToFile("main activity")
         settingFragment = SettingFragment()
         replaceFragment(settingFragment!!, R.id.fl_main_setting)

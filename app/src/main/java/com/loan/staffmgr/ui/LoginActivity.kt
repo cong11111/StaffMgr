@@ -93,9 +93,9 @@ class LoginActivity : BaseActivity() {
         }
         if (BuildConfig.DEBUG && TextUtils.isEmpty(account) && TextUtils.isEmpty(pwd)) {
 //            etPhoneNum?.getEditText()?.setText("Collection6@icredit.com")
-            etPhoneNum?.getEditText()?.setText("Dc50@icredit.ng")
+            etPhoneNum?.getEditText()?.setText("dc85@icredit.ng ")
 //            etPhonePwd?.getEditText()?.setText("Ab!123456")
-            etPhonePwd?.getEditText()?.setText("!Sekemi1234")
+            etPhonePwd?.getEditText()?.setText("Focus@1234")
         }
 
         PermissionUtils.permission(Manifest.permission.READ_PHONE_STATE,

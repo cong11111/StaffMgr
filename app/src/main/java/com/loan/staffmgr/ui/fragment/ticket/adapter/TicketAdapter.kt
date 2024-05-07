@@ -30,6 +30,12 @@ class TicketAdapter(val contactLists: ArrayList<TicketsResponse.Contact>, val fr
             }
 
         })
+        holder.tvSms?.setOnClickListener(object : OnClickListener {
+            override fun onClick(v: View?) {
+                fragment?.sendSms(contact.mobile)
+            }
+
+        })
         holder.tvId?.text = contact?.key.toString()
         holder.tvRelationShip?.text =  contact?.relationship.toString()
         holder.tvName?.text = contact?.mobile.toString()

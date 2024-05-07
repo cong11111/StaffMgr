@@ -8,6 +8,7 @@ import com.loan.staffmgr.R
 class TicketHolder(itemView : View) : ViewHolder(itemView)  {
 
     var tvCall : AppCompatTextView? = null
+    var tvSms : AppCompatTextView? = null
     var tvId : AppCompatTextView? = null
     var tvRelationShip : AppCompatTextView? = null
     var tvName : AppCompatTextView? = null
@@ -15,6 +16,7 @@ class TicketHolder(itemView : View) : ViewHolder(itemView)  {
 
     init {
         tvCall =  itemView.findViewById<AppCompatTextView>(R.id.tv_ticket_item_call)
+//        tvSms =  itemView.findViewById<AppCompatTextView>(R.id.tv_ticket_item_sms)
         tvId =  itemView.findViewById<AppCompatTextView>(R.id.tv_ticket_item_id)
         tvRelationShip =  itemView.findViewById<AppCompatTextView>(R.id.tv_ticket_item_relationship)
         tvName =  itemView.findViewById<AppCompatTextView>(R.id.tv_ticket_item_name)

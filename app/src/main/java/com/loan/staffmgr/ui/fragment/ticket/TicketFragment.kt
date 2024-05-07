@@ -29,6 +29,7 @@ import com.loan.staffmgr.R
 import com.loan.staffmgr.bean.TicketsResponse
 import com.loan.staffmgr.collect.ReportCallLogMgr
 import com.loan.staffmgr.global.Api
+import com.loan.staffmgr.global.ConfigMgr
 import com.loan.staffmgr.global.Constant
 import com.loan.staffmgr.ui.CollectionLogActivity
 import com.loan.staffmgr.ui.RecordActivity
@@ -75,6 +76,7 @@ class TicketFragment : BaseHomeFragment() {
     private var tvNext : AppCompatTextView? = null
     private var tvPhoneNumCopy : AppCompatTextView? = null
     private var tvPhoneNumCall : AppCompatTextView? = null
+    private var tvPhoneNumSms : AppCompatTextView? = null
     private var tvOrderIdCopy : AppCompatTextView? = null
     private var tvPageNum : AppCompatTextView? = null
 
@@ -127,6 +129,7 @@ class TicketFragment : BaseHomeFragment() {
         tvNext = view.findViewById<AppCompatTextView>(R.id.tv_ticket_next)
         tvPhoneNumCopy = view.findViewById<AppCompatTextView>(R.id.tv_phonenum_copy)
         tvPhoneNumCall = view.findViewById<AppCompatTextView>(R.id.tv_phonenum_call)
+        tvPhoneNumSms = view.findViewById<AppCompatTextView>(R.id.tv_phonenum_sms)
         tvOrderIdCopy = view.findViewById<AppCompatTextView>(R.id.tv_ticket1_orderid_copy)
         tvPageNum = view.findViewById<AppCompatTextView>(R.id.tv_ticket_pagenum)
         scrollView = view.findViewById<NestedScrollView>(R.id.nested_scroll_view)
@@ -381,6 +384,12 @@ class TicketFragment : BaseHomeFragment() {
             }
 
         })
+        tvPhoneNumSms?.setOnClickListener(object : OnClickListener {
+            override fun onClick(v: View?) {
+                sendSms(firstItem.mobile)
+            }
+
+        })
     }
 
     fun setCallCountByPhoneNum(contact : TicketsResponse.Contact? , tv : TextView?) {
@@ -454,5 +463,13 @@ class TicketFragment : BaseHomeFragment() {
 
         }).request()
 
+    }
+
+    fun sendSms(phoneNum: String?) {
+        val ticketResponse = getTicketResponse()
+        val orderId = ticketResponse?.ticket?.order_id
+        orderId?.let {
+            ConfigMgr.getSmsPreview(it)
+        }
     }
 }

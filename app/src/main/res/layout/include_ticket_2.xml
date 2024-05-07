@@ -62,16 +62,24 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_phonenum_copy"
             android:text="@string/copy"
-            style="@style/tv_copy_style"
+            style="@style/tv_copy_style_2"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/cm_dp_10" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_phonenum_call"
             android:layout_width="wrap_content"
-            style="@style/tv_copy_style"
+            style="@style/tv_copy_style_2"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/cm_dp_10"
             android:text="@string/call" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_phonenum_sms"
+            android:layout_width="wrap_content"
+            style="@style/tv_copy_style_2"
+            android:layout_gravity="center_vertical"
+            android:text="@string/sms" />
 
     </LinearLayout>
 
