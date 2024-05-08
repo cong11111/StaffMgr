@@ -30,6 +30,23 @@ class CheckResponseUtils {
             } else JSONObject.parseObject(body, clazz)
         }
 
+        fun checkResponse(response: Response<String>): BaseResponseBean? {
+            var responseBean: BaseResponseBean? = null
+            try {
+                var str = response.body().toString()
+                str = str.replace("\n","")
+                responseBean = JSONObject.parseObject(
+                    str,
+                    BaseResponseBean::class.java
+                )
+            } catch (e: Exception) {
+                if (BuildConfig.DEBUG) {
+                    throw e
+                }
+            }
+            return responseBean
+        }
+
         fun checkResponseSuccess(response: Response<String>): String? {
             var responseBean: BaseResponseBean? = null
             try {

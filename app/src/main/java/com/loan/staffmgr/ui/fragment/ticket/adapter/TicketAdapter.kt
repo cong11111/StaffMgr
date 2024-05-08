@@ -32,7 +32,7 @@ class TicketAdapter(val contactLists: ArrayList<TicketsResponse.Contact>, val fr
         })
         holder.tvSms?.setOnClickListener(object : OnClickListener {
             override fun onClick(v: View?) {
-                fragment?.sendSms(contact.mobile)
+                fragment?.executeShowSendSmsDialog(contact.mobile)
             }
 
         })

@@ -53,4 +53,7 @@
     <string name="setting_logout">Logout</string>
     <string name="setting_about">About</string>
     <string name="sync_call_record">Sync call record...</string>
+
+    <string name="ok_str">OK</string>
+    <string name="cancel_str">Cancel</string>
 </resources>

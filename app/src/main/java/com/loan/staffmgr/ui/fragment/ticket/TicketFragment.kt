@@ -2,11 +2,11 @@ package com.loan.staffmgr.ui.fragment.ticket
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -15,6 +15,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.PhoneUtils
-import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.staffmgr.BuildConfig
 import com.loan.staffmgr.R
@@ -36,9 +36,9 @@ import com.loan.staffmgr.ui.RecordActivity
 import com.loan.staffmgr.ui.TicketListActivity
 import com.loan.staffmgr.ui.fragment.BaseHomeFragment
 import com.loan.staffmgr.ui.fragment.ticket.adapter.TicketAdapter
-import com.loan.staffmgr.utils.BuildRecordUtils
 import com.loan.staffmgr.utils.CheckResponseUtils
 import com.loan.staffmgr.utils.MyDateUtils
+import com.loan.staffmgr.utils.log.LogSaver
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -386,7 +386,7 @@ class TicketFragment : BaseHomeFragment() {
         })
         tvPhoneNumSms?.setOnClickListener(object : OnClickListener {
             override fun onClick(v: View?) {
-                sendSms(firstItem.mobile)
+                executeShowSendSmsDialog(firstItem.mobile)
             }
 
         })
@@ -465,11 +465,94 @@ class TicketFragment : BaseHomeFragment() {
 
     }
 
-    fun sendSms(phoneNum: String?) {
+    fun executeShowSendSmsDialog(phoneNum: String?) {
         val ticketResponse = getTicketResponse()
         val orderId = ticketResponse?.ticket?.order_id
-        orderId?.let {
-            ConfigMgr.getSmsPreview(it)
+        if (orderId == null || TextUtils.isEmpty(orderId.toString())) {
+            ToastUtils.showShort("not have order id")
+            return
         }
+        val jsonObject = JSONObject()
+        jsonObject.put("order_id", orderId)
+        OkGo.post<String>(Api.SMS_PREVIEW).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()){
+                        return
+                    }
+                    val responseStr = CheckResponseUtils.checkResponseSuccess(response)
+                    if (TextUtils.isEmpty(responseStr)) {
+                        LogSaver.logToFile("not have data, please retry")
+                        ToastUtils.showShort("not have data, please retry")
+                        return
+                    }
+                    val resultStr = JSONObject(responseStr).optString("content")
+                    if (TextUtils.isEmpty(resultStr)) {
+                        LogSaver.logToFile("not have content, please retry")
+                        ToastUtils.showShort("not have content, please retry")
+                        return
+                    }
+                    try {
+                        showSendSmsDialog(resultStr, orderId)
+                    } catch (e : Exception) {
+
+                    }
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    LogSaver.logToFile("request sms preview error, please retry")
+                    ToastUtils.showShort("request sms preview error, please retry")
+                }
+            })
+    }
+
+    private fun showSendSmsDialog(resultStr: String, orderId: Long) {
+        if (context == null || isDestroy()){
+            return
+        }
+        if (TextUtils.isEmpty(resultStr)){
+            ToastUtils.showShort("not have content, please retry")
+            LogSaver.logToFile("not have content, please retry 2 ")
+            return
+        }
+        val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.alert_dialog_theme)
+        dialogBuilder.setTitle("The Message will be send to customer:")
+        dialogBuilder.setMessage(resultStr)
+        dialogBuilder.setCancelable(false)
+        dialogBuilder.setPositiveButton(R.string.ok_str) { _: DialogInterface, _: Int ->
+            sendSms(orderId)
+        }
+        dialogBuilder.setNegativeButton(R.string.cancel_str) { _: DialogInterface, _: Int ->
+
+        }
+        dialogBuilder.show()
+    }
+
+    private fun sendSms(orderId : Long) {
+        val jsonObject = JSONObject()
+        jsonObject.put("order_id", orderId)
+        OkGo.post<String>(Api.SMS_SEND).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    val responseBean = CheckResponseUtils.checkResponse(response)
+                    if (responseBean == null || !responseBean.isRequestSuccess) {
+                        LogSaver.logToFile("send message error " + response.body().toString())
+                        ToastUtils.showShort("send message error")
+                        return
+                    }
+                    ToastUtils.showShort("send message success")
+//                    Log.e(TAG, " data = " + responseStr);
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    ToastUtils.showShort("request send message error")
+                    LogSaver.logToFile(response.body().toString())
+                }
+            })
+
     }
 }
