@@ -466,10 +466,12 @@ class TicketFragment : BaseHomeFragment() {
     }
 
     fun executeShowSendSmsDialog(phoneNum: String?) {
+        tvPhoneNumSms?.isEnabled = false
         val ticketResponse = getTicketResponse()
         val orderId = ticketResponse?.ticket?.order_id
         if (orderId == null || TextUtils.isEmpty(orderId.toString())) {
             ToastUtils.showShort("not have order id")
+            tvPhoneNumSms?.isEnabled = true
             return
         }
         val jsonObject = JSONObject()
@@ -485,12 +487,14 @@ class TicketFragment : BaseHomeFragment() {
                     if (TextUtils.isEmpty(responseStr)) {
                         LogSaver.logToFile("not have data, please retry")
                         ToastUtils.showShort("not have data, please retry")
+                        tvPhoneNumSms?.isEnabled = true
                         return
                     }
                     val resultStr = JSONObject(responseStr).optString("content")
                     if (TextUtils.isEmpty(resultStr)) {
                         LogSaver.logToFile("not have content, please retry")
                         ToastUtils.showShort("not have content, please retry")
+                        tvPhoneNumSms?.isEnabled = true
                         return
                     }
                     try {
@@ -515,6 +519,7 @@ class TicketFragment : BaseHomeFragment() {
         if (TextUtils.isEmpty(resultStr)){
             ToastUtils.showShort("not have content, please retry")
             LogSaver.logToFile("not have content, please retry 2 ")
+            tvPhoneNumSms?.isEnabled = true
             return
         }
         val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.alert_dialog_theme)
@@ -528,9 +533,14 @@ class TicketFragment : BaseHomeFragment() {
 
         }
         dialogBuilder.show()
+        tvPhoneNumSms?.isEnabled = true
     }
 
     private fun sendSms(orderId : Long) {
+        if (BuildConfig.DEBUG) {
+            ToastUtils.showShort("send message success")
+            return
+        }
         val jsonObject = JSONObject()
         jsonObject.put("order_id", orderId)
         OkGo.post<String>(Api.SMS_SEND).tag(TAG)
